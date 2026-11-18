@@ -2,6 +2,7 @@
 from __future__ import annotations
 
 import hashlib
+import json
 import re
 from pathlib import Path, PurePosixPath
 from urllib.parse import unquote, urlsplit
@@ -11,6 +12,15 @@ ROOT = Path(__file__).resolve().parents[1]
 IGNORED = {'.git', '.venv', '.tmp', 'dist', '__pycache__', '.pytest_cache', '.obsidian', '.vscode', '.idea'}
 STATUSES = {'Canon', 'Draft', 'Unused', 'Retired'}
 VISIBILITIES = {'GM', 'Player-safe'}
+
+OPENCODE_PERMISSIONS = [
+    ('external_directory', '*', 'ask'),
+    ('edit', '*', 'ask'),
+    ('shell', '*', 'ask'),
+    ('webfetch', '*', 'allow'),
+    ('websearch', '*', 'ask'),
+    ('experimental_image_generate', '*', 'ask'),
+]
 
 class UniqueLoader(yaml.SafeLoader):
     pass
@@ -32,6 +42,30 @@ UniqueLoader.add_constructor(yaml.resolver.BaseResolver.DEFAULT_MAPPING_TAG, uni
 
 def load_yaml(text: str):
     return yaml.load(text, Loader=UniqueLoader)
+
+def validate_opencode_config(data) -> list[str]:
+    """Validate the distributed Ollama default and guarded optional integrations."""
+    errors = []
+    if not isinstance(data, dict):
+        return ['configuration must be a JSON object']
+    if data.get('$schema') != 'https://opencode.ai/config.json':
+        errors.append('missing OpenCode v2 schema')
+    if data.get('model') != 'ollama/qwen3-coder:30b':
+        errors.append('model must be the reviewed local Ollama model')
+
+    def rules(name):
+        value = data.get(name)
+        if not isinstance(value, list) or not all(isinstance(rule, dict) for rule in value):
+            errors.append(f'{name} must be a list of rule objects')
+            return []
+        return [(rule.get('action'), rule.get('resource'), rule.get('effect')) for rule in value]
+
+    permissions = rules('permissions')
+    if permissions != OPENCODE_PERMISSIONS:
+        errors.append('permissions must match the reviewed OpenCode workspace policy')
+    if 'policies' in data:
+        errors.append('provider policies must not prevent optional OpenCode integrations')
+    return errors
 
 def files(root: Path):
     for path in sorted(root.rglob('*')):
@@ -197,6 +231,10 @@ def validate_project(root: Path = ROOT) -> list[str]:
         errors.extend(f'campaign.yaml: {e}' for e in validate_config(load_yaml((root / 'campaign.yaml').read_text(encoding='utf-8')), root))
     except (ValueError, yaml.YAMLError, OSError) as exc:
         errors.append(f'campaign.yaml: {exc}')
+    try:
+        errors.extend(f'opencode.json: {e}' for e in validate_opencode_config(json.loads((root / 'opencode.json').read_text(encoding='utf-8'))))
+    except (ValueError, OSError, json.JSONDecodeError) as exc:
+        errors.append(f'opencode.json: {exc}')
     skill_count = 0
     for path in files(root):
         relative = path.relative_to(root).as_posix()

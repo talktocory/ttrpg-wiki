@@ -3,6 +3,7 @@
 ## Unreleased
 
 - Adopted the project name TTRPG Wiki and renamed the template archive and its top-level folder to match.
+- Added OpenCode v2 with Ollama as a documented local-model platform, including native skill discovery, guarded web and image integrations, release validation, and a manual acceptance scenario.
 
 - Made campaign configuration easier to find with an example and field guide, emphasized generating map/token artwork, and documented fast, source-linked campaign lookups as a primary use of the wiki.
 - Simplified the AI-tool setup guides and testing notes, and gave Claude Desktop a clearly marked copy box containing campaign instructions without developer commands.

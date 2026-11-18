@@ -2,7 +2,7 @@
 
 The campaign notebook uses the same notes and approval process whichever AI tool you choose. The main difference is what the application can do with files on your computer.
 
-Start with the guide for [Codex](codex.md), [Claude Desktop](claude-desktop.md), or [GitHub Copilot](github-copilot.md). You do not need to run the project's tests to prepare a session.
+Start with the guide for [Codex](codex.md), [Claude Desktop](claude-desktop.md), [GitHub Copilot](github-copilot.md), or [OpenCode v2 with an Ollama model](opencode-ollama.md). You do not need to run the project's tests to prepare a session.
 
 ## What can vary?
 
@@ -28,6 +28,7 @@ The project has been developed in Codex. The other setup guides follow the provi
 | Codex | Used during development; a fresh installation still needs a separate check |
 | Claude Desktop | Setup guides and skill ZIPs prepared; installation and campaign tasks have not yet been tested in the app |
 | GitHub Copilot | Setup guides prepared; finding skills and completing campaign tasks have not yet been tested in VS Code or the CLI |
+| OpenCode v2 with Ollama | Native `AGENTS.md` and `.agents/skills/` discovery plus an Ollama-default configuration checked against current documentation; installation and campaign tasks have not yet been tested in the app |
 
 The local file checks and utility tests have passed. They help catch mistakes in the project, but they do not prove that another AI application will follow every instruction or keep every spoiler out of a recap. Review proposed changes and player material yourself.
 
@@ -40,9 +41,11 @@ No AI subscription, PDF tool, or image service is included with this project. Yo
 <details>
 <summary>Technical test record for contributors</summary>
 
-Documentation references were checked on 2026-11-17. Live setup checks remain pending for Claude Desktop Cowork, Claude Desktop Chat, Copilot in VS Code, and Copilot CLI. Do not count one application's results as a test of another.
+Documentation references were checked on 2026-11-18. Live setup checks remain pending for Claude Desktop Cowork, Claude Desktop Chat, Copilot in VS Code, Copilot CLI, and OpenCode v2 with Ollama. Do not count one application's results as a test of another.
 
-Local utility checks used Windows, Python 3.13.7, PyYAML 6.0.3, and Pillow 13.0.0. Configuration, links, skill metadata, generated instructions, 15 automated tests, skill ZIP construction, and the template ZIP round trip passed. CI is configured for Ubuntu and Windows on Python 3.11 and 3.13; those hosted jobs have not run as part of the local conversion.
+The OpenCode project configuration is parsed by the local test suite, and release validation checks its default Ollama model, approval safeguards, and enabled optional web/image integrations. These are structural checks, not evidence that a particular local model followed the campaign workflow correctly.
+
+Local utility checks used Windows, Python 3.13.7, PyYAML 6.0.3, and Pillow 13.0.0. Configuration, links, skill metadata, generated instructions, 17 automated tests, skill ZIP construction, and the template ZIP round trip passed. CI is configured for Ubuntu and Windows on Python 3.11 and 3.13; those hosted jobs have not run as part of the local conversion.
 
 Record the application version, date, task, and observed result when testing. The [contributor evaluation guide](../evaluation.md) has example tasks. Successful file checks alone do not establish working skill discovery or correct assistant behavior.
 

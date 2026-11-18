@@ -40,7 +40,7 @@ A **skill** is a prepared set of task instructions. You can usually ask in ordin
 ## Start your campaign
 
 1. Download or copy the project into a **private folder for one campaign**. A private GitHub repository is optional.
-2. Follow the setup guide for [Codex](docs/platforms/codex.md), [Claude Desktop](docs/platforms/claude-desktop.md), or [GitHub Copilot](docs/platforms/github-copilot.md).
+2. Follow the setup guide for [Codex](docs/platforms/codex.md), [Claude Desktop](docs/platforms/claude-desktop.md), [GitHub Copilot](docs/platforms/github-copilot.md), or [OpenCode v2 with an Ollama model](docs/platforms/opencode-ollama.md).
 3. Tell the assistant your game, edition, campaign name, and preferences. Ask it to propose your [campaign settings](docs/configuration.md).
 4. Add notes to `raw/` or develop an idea in chat. Ask the assistant to ingest that material and propose wiki updates.
 5. Review the proposed changes and request revisions. When ready, approve the parts you want saved:

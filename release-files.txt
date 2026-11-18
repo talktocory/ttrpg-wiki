@@ -47,6 +47,7 @@ docs/platforms/claude-folder-instructions.md
 docs/platforms/codex.md
 docs/platforms/compatibility.md
 docs/platforms/github-copilot.md
+docs/platforms/opencode-ollama.md
 docs/provenance.md
 docs/scripts.md
 examples/relay-station/README.md
@@ -62,6 +63,7 @@ raw/markdown/.gitkeep
 raw/pdfs/.gitkeep
 release-files.txt
 requirements-dev.txt
+opencode.json
 scripts/build_release.py
 scripts/package_skills.py
 scripts/sync_adapters.py

@@ -6,7 +6,7 @@ Start with a single set of notes. You do not need to fill every folder, learn Py
 
 Download and unzip the project, or copy it into a folder named for your campaign. Keep one campaign in each copy. If you prefer GitHub, create a private repository from the template rather than putting campaign notes in a public fork.
 
-Choose the [Codex](platforms/codex.md), [Claude Desktop](platforms/claude-desktop.md), or [GitHub Copilot](platforms/github-copilot.md) guide to connect your assistant. Some versions can work directly in your folder; others need you to attach the relevant files to a chat.
+Choose the [Codex](platforms/codex.md), [Claude Desktop](platforms/claude-desktop.md), [GitHub Copilot](platforms/github-copilot.md), or [OpenCode v2 with an Ollama model](platforms/opencode-ollama.md) guide to connect your assistant. Some versions can work directly in your folder; others need you to attach the relevant files to a chat.
 
 ## 2. Let the assistant get its bearings
 

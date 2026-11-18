@@ -88,7 +88,7 @@ The generator reads [AGENTS.md](../AGENTS.md) and writes:
 - `CLAUDE.md` for optional Claude Code use
 - `docs/platforms/claude-folder-instructions.md` for Desktop folder/task instructions
 
-The Copilot and Claude Code files receive the full instructions with a short introduction. The Claude Desktop page puts only the campaign instructions into a clearly marked box for the GM to copy; the `Framework development` section and its contributor commands are left out. All campaign policy still comes from the same `AGENTS.md` source.
+The Copilot and Claude Code files receive the full instructions with a short introduction. The Claude Desktop page puts only the campaign instructions into a clearly marked box for the GM to copy; the `Framework development` section and its contributor commands are left out. All campaign policy still comes from the same `AGENTS.md` source. OpenCode v2 reads `AGENTS.md` and `.agents/skills/` natively, so it does not need another generated adapter.
 
 **File effects:** generation replaces those three files, including any direct edits made to them. Make shared policy edits in `AGENTS.md`. `--check` compares expected content and reports drift without writing anything. A change only to the shared operating guide does not change the generated adapter text; the adapters already direct the assistant to read that guide.
 
@@ -202,11 +202,11 @@ Source: [tests/test_framework.py](../tests/test_framework.py).
 python -m unittest discover -s tests -v
 ```
 
-The tests cover configuration validation, duplicate YAML keys, local-path boundaries, player-safe links, self-contained skill packages, reproducible ZIP construction, release refusal for populated campaign state, a clean-template archive round trip, and token dimensions/transparency/overwrite protection. One test extracts the token skill and runs its utility as a standalone process.
+The tests cover campaign and OpenCode configuration validation, duplicate YAML keys, local-path boundaries, player-safe links, self-contained skill packages, reproducible ZIP construction, release refusal for populated campaign state, a clean-template archive round trip, and token dimensions/transparency/overwrite protection. One test extracts the token skill and runs its utility as a standalone process.
 
 **File effects:** creates isolated temporary files and removes them afterward. It reads the framework checkout but does not edit campaign files or write the regular `dist/` packages. The clean-release round-trip test is skipped when the blank-scaffold fingerprints no longer match a populated/customized campaign.
 
-**Result:** prints each test outcome and an overall result; exit code `0` means the tests passed, and nonzero indicates failure. A skipped test is not a pass for that capability. These are utility tests, not live Codex, Claude Desktop, or Copilot evaluations; see [behavioral evaluation](evaluation.md).
+**Result:** prints each test outcome and an overall result; exit code `0` means the tests passed, and nonzero indicates failure. A skipped test is not a pass for that capability. These are utility tests, not live Codex, Claude Desktop, Copilot, or OpenCode/Ollama evaluations; see [behavioral evaluation](evaluation.md).
 
 ## Maintainer sequence
 

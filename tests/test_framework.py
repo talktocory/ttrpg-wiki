@@ -14,7 +14,7 @@ from PIL import Image
 
 ROOT = Path(__file__).resolve().parents[1]
 sys.path.insert(0, str(ROOT / 'scripts'))
-from wiki_tools import load_yaml, validate_config, validate_links, safe_path, template_digest
+from wiki_tools import load_yaml, validate_config, validate_links, validate_opencode_config, safe_path, template_digest
 from package_skills import skill_entries, zip_bytes
 from build_release import release_entries
 
@@ -78,6 +78,24 @@ class BoundaryTests(unittest.TestCase):
         for path in ('../outside', '/absolute', 'C:/private', 'sub\\file'):
             with self.subTest(path=path), self.assertRaises(ValueError):
                 safe_path(ROOT, path, must_exist=False)
+
+class OpenCodeConfigTests(unittest.TestCase):
+    def setUp(self):
+        self.config = json.loads((ROOT / 'opencode.json').read_text(encoding='utf-8'))
+
+    def test_distributed_profile_uses_ollama_with_guarded_integrations(self):
+        self.assertEqual(validate_opencode_config(self.config), [])
+
+    def test_wrong_model_or_changed_safeguards_fail(self):
+        cloud = copy.deepcopy(self.config)
+        cloud['model'] = 'ollama/qwen3-coder:480b-cloud'
+        self.assertTrue(validate_opencode_config(cloud))
+        unguarded = copy.deepcopy(self.config)
+        unguarded['permissions'] = [rule for rule in unguarded['permissions'] if rule['action'] != 'edit']
+        self.assertTrue(validate_opencode_config(unguarded))
+        restricted = copy.deepcopy(self.config)
+        restricted['policies'] = [{'action': 'provider.use', 'resource': '*', 'effect': 'deny'}]
+        self.assertTrue(validate_opencode_config(restricted))
 
 class PackageTests(unittest.TestCase):
     def test_extracted_token_package_runs_independently(self):
