@@ -39,9 +39,9 @@ def release_entries(root: Path = ROOT) -> dict[str, bytes]:
             raise ValueError(f'Private/generated directory in manifest: {name}')
         if path.name.startswith('.env') or path.suffix in {'.key', '.pem'}:
             raise ValueError(f'Credential-like file in manifest: {name}')
-        entries['ttrpg-llm/' + name] = path.read_bytes()
+        entries['ttrpg-wiki/' + name] = path.read_bytes()
     hashes = ''.join(f'{sha256(safe_path(root, name))}  {name}\n' for name in names)
-    entries['ttrpg-llm/SHA256SUMS.txt'] = hashes.encode('utf-8')
+    entries['ttrpg-wiki/SHA256SUMS.txt'] = hashes.encode('utf-8')
     return entries
 
 def main() -> int:
@@ -50,7 +50,7 @@ def main() -> int:
     except (ValueError, OSError) as exc:
         print('Release refused:', exc)
         return 1
-    output = ROOT / 'dist/ttrpg-llm-template.zip'
+    output = ROOT / 'dist/ttrpg-wiki-template.zip'
     output.parent.mkdir(parents=True, exist_ok=True)
     output.write_bytes(zip_bytes(entries))
     print(f'Built {output.relative_to(ROOT)} ({len(entries)} files); review before publishing.')

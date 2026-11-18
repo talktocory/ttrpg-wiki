@@ -1,4 +1,4 @@
-# ttrpg-llm
+# TTRPG Wiki
 
 Spend more time preparing the next game and less time piecing together what happened in the last six.
 

@@ -132,7 +132,7 @@ python scripts/build_release.py
 
 It reads [release-files.txt](../release-files.txt), the explicit file allowlist, and [scripts/template-state.json](../scripts/template-state.json), the fingerprints of approved blank campaign scaffolding. It checks that the scaffolding remains unchanged, rejects unexpected campaign files, checks adapter consistency, and runs project validation. It also rejects invalid manifest paths, designated private/generated paths, and credential-like filenames covered by its checks.
 
-**Output:** `dist/ttrpg-llm-template.zip`, replacing the previous archive only after its pre-build checks succeed. The ZIP contains the allowlisted files under a `ttrpg-llm/` folder, plus `SHA256SUMS.txt`. These checksums can detect file changes relative to the manifest; they are not a signature or a privacy certification. The archive contains framework source, not the separately built skill ZIPs in `dist/skills/`.
+**Output:** `dist/ttrpg-wiki-template.zip`, replacing the previous archive only after its pre-build checks succeed. The ZIP contains the allowlisted files under a `ttrpg-wiki/` folder, plus `SHA256SUMS.txt`. These checksums can detect file changes relative to the manifest; they are not a signature or a privacy certification. The archive contains framework source, not the separately built skill ZIPs in `dist/skills/`.
 
 Blank-scaffold fingerprints normalize line endings. The release checksum file hashes the actual archived bytes. The builder does not update the allowlist or fingerprints automatically.
 

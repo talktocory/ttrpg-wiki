@@ -14,7 +14,7 @@ When simplifying older asset-note layouts, migrate any existing notes onto their
 
 ## Build a release
 
-Use a clean framework checkout, not a populated campaign. Run validation, tests, adapter checks, and skill packaging. `python scripts/build_release.py` uses `release-files.txt`, checks blank campaign scaffolding, and writes `dist/ttrpg-llm-template.zip` with a SHA-256 manifest. Local environments, Git metadata, credentials, temporary output, and runtime campaign data are excluded.
+Use a clean framework checkout, not a populated campaign. Run validation, tests, adapter checks, and skill packaging. `python scripts/build_release.py` uses `release-files.txt`, checks blank campaign scaffolding, and writes `dist/ttrpg-wiki-template.zip` with a SHA-256 manifest. Local environments, Git metadata, credentials, temporary output, and runtime campaign data are excluded.
 
 Review the ZIP manifest, examples, licenses, and compatibility record. Automated checks cannot certify semantic spoilers or redistribution rights. Explicitly add new framework files to the release manifest. Blank-scaffold fingerprints in `scripts/template-state.json` use UTF-8 text with normalized newlines; if deliberately changing a blank scaffold, review that exact change before updating its fingerprint. Never regenerate the baseline from a populated campaign. `SHA256SUMS.txt` in the release hashes the actual archived bytes.
 

@@ -4,7 +4,7 @@
 
 Use the campaign folder chosen by the GM for the files described below.
 
-# TTRPG LLM Wiki: Agent Instructions
+# TTRPG Wiki: Agent Instructions
 
 You are helping a game master (GM) look after one tabletop roleplaying campaign. Follow the GM's chosen game and edition; do not assume a particular rules system.
 

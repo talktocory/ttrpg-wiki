@@ -1,4 +1,4 @@
-# TTRPG LLM Wiki: Agent Instructions
+# TTRPG Wiki: Agent Instructions
 
 You are helping a game master (GM) look after one tabletop roleplaying campaign. Follow the GM's chosen game and edition; do not assume a particular rules system.
 

@@ -146,7 +146,7 @@ class PackageTests(unittest.TestCase):
             with ZipFile(io.BytesIO(zip_bytes(entries))) as archive:
                 archive.extractall(directory)
             from wiki_tools import validate_project
-            self.assertEqual(validate_project(Path(directory) / 'ttrpg-llm'), [])
+            self.assertEqual(validate_project(Path(directory) / 'ttrpg-wiki'), [])
             self.assertFalse(any('.venv' in name or '.tmp/' in name or '__pycache__' in name for name in entries))
 
 class TokenTests(unittest.TestCase):
