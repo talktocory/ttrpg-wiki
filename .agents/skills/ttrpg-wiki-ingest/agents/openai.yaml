@@ -1,0 +1,4 @@
+interface:
+  display_name: "TTRPG Wiki Ingest"
+  short_description: "Propose source-grounded campaign wiki updates"
+  default_prompt: "Use $ttrpg-wiki-ingest for this campaign task, following the configured system and approval workflow."

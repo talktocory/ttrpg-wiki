@@ -1,0 +1,42 @@
+# Campaign settings. The assistant can help you fill these in before saving.
+# Guide and examples: docs/configuration.md
+# Start with your campaign name, game, and edition; leave undecided choices open.
+schema_version: 1
+campaign:
+  name: "Untitled campaign"
+  premise: ""
+  genre: "unspecified"
+  tone: ""
+  language: "English"
+system:
+  name: null
+  edition: null
+  profile: null
+  references: []  # Authorized local paths or official URLs.
+  house_rules: []
+terminology:
+  gm: "GM"
+  player_character: "player character"
+  advancement: "advancement"
+table:
+  session_minutes: null
+  preferences: []
+rewards:
+  units: []  # Unrelated resources are never added together.
+  period: "session"
+  budgets: []  # Optional: {period: "mission-1", unit: credits, target: 100}
+vtt:
+  profile: null
+  grid: "none"  # none, square, hex, zones
+  distance_unit: null
+  distance_per_cell: null
+  pixels_per_cell: null
+artwork:
+  style: ""
+  token_shape: "circle"
+  token_pixels: 512
+  map_format: "jpg"
+  images_per_round: 1
+workflow:
+  approval: "proposal-first"
+  integrations: []

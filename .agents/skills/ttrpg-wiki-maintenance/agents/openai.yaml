@@ -1,0 +1,4 @@
+interface:
+  display_name: "TTRPG Wiki Maintenance"
+  short_description: "Audit wiki structure and campaign consistency"
+  default_prompt: "Use $ttrpg-wiki-maintenance for this campaign task, following the configured system and approval workflow."

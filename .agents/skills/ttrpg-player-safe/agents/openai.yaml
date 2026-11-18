@@ -1,0 +1,4 @@
+interface:
+  display_name: "TTRPG Player Safe"
+  short_description: "Draft and review spoiler-safe player materials"
+  default_prompt: "Use $ttrpg-player-safe for this campaign task, following the configured system and approval workflow."

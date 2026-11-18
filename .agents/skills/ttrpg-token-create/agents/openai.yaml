@@ -1,0 +1,4 @@
+interface:
+  display_name: "TTRPG Token Create"
+  short_description: "Generate character portraits and token images"
+  default_prompt: "Use $ttrpg-token-create to generate one character token image from the wiki description and campaign art settings, then show it for review."

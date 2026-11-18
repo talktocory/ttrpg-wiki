@@ -1,0 +1,4 @@
+interface:
+  display_name: "TTRPG Reward Ledger"
+  short_description: "Reconcile confirmed rewards without duplicates"
+  default_prompt: "Use $ttrpg-reward-ledger for this campaign task, following the configured system and approval workflow."

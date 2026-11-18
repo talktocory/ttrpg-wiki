@@ -1,0 +1,4 @@
+interface:
+  display_name: "TTRPG Map Create"
+  short_description: "Generate and refine campaign map images"
+  default_prompt: "Use $ttrpg-map-create to generate one map image from the campaign notes and settings, then show it for review."

@@ -1,0 +1,4 @@
+interface:
+  display_name: "TTRPG Session Prep"
+  short_description: "Prepare flexible scenes from campaign context"
+  default_prompt: "Use $ttrpg-session-prep for this campaign task, following the configured system and approval workflow."

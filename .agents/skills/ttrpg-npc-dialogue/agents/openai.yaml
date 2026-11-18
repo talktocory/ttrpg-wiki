@@ -1,0 +1,4 @@
+interface:
+  display_name: "TTRPG Npc Dialogue"
+  short_description: "Prepare NPC dialogue for established scenes"
+  default_prompt: "Use $ttrpg-npc-dialogue for this campaign task, following the configured system and approval workflow."
