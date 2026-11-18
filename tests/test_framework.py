@@ -15,8 +15,9 @@ from PIL import Image
 ROOT = Path(__file__).resolve().parents[1]
 sys.path.insert(0, str(ROOT / 'scripts'))
 from wiki_tools import load_yaml, validate_config, validate_links, validate_opencode_config, safe_path, template_digest
-from package_skills import skill_entries, zip_bytes
+from package_skills import BUNDLED, archive_errors, skill_entries, zip_bytes
 from build_release import release_entries
+from sync_adapters import claude_skill_drift, copilot_skill_drift, expected_claude_skills, expected_copilot_skills, sync_claude_skills, sync_copilot_skills
 
 spec = importlib.util.spec_from_file_location('token_export', ROOT / '.agents/skills/ttrpg-token-create/scripts/finalize_token.py')
 token = importlib.util.module_from_spec(spec)
@@ -98,6 +99,17 @@ class OpenCodeConfigTests(unittest.TestCase):
         self.assertTrue(validate_opencode_config(restricted))
 
 class PackageTests(unittest.TestCase):
+    def test_committed_package_check_reports_drift(self):
+        with tempfile.TemporaryDirectory() as directory:
+            output = Path(directory)
+            expected = {'ttrpg-current.zip': b'current'}
+            self.assertEqual(archive_errors(output, expected), ['Missing committed skill package: ttrpg-current.zip'])
+            (output / 'ttrpg-current.zip').write_bytes(b'stale')
+            self.assertEqual(archive_errors(output, expected), ['Stale committed skill package: ttrpg-current.zip'])
+            (output / 'ttrpg-current.zip').write_bytes(b'current')
+            (output / 'ttrpg-retired.zip').write_bytes(b'retired')
+            self.assertEqual(archive_errors(output, expected), ['Obsolete committed skill package: ttrpg-retired.zip'])
+
     def test_extracted_token_package_runs_independently(self):
         skill = ROOT / '.agents/skills/ttrpg-token-create'
         with tempfile.TemporaryDirectory() as directory:
@@ -119,7 +131,10 @@ class PackageTests(unittest.TestCase):
                 entries = skill_entries(skill)
                 self.assertIn(f'{skill.name}/SKILL.md', entries)
                 self.assertIn(f'{skill.name}/LICENSE', entries)
-                self.assertIn(f'{skill.name}/references/framework/operating-guide.md', entries)
+                source_text = (skill / 'SKILL.md').read_text(encoding='utf-8')
+                for original, bundled in BUNDLED.items():
+                    if original in source_text:
+                        self.assertIn(f'{skill.name}/{bundled}', entries)
                 first = zip_bytes(entries)
                 self.assertEqual(first, zip_bytes(entries))
                 with ZipFile(io.BytesIO(first)) as archive:
@@ -133,6 +148,34 @@ class PackageTests(unittest.TestCase):
             (skill / 'SKILL.md').write_text('[missing](../private.md)\n', encoding='utf-8')
             with self.assertRaisesRegex(ValueError, 'Unbundled'):
                 skill_entries(skill, Path(directory))
+
+    def test_host_skill_mirrors_preserve_unmanaged_files(self):
+        mirrors = [
+            ('.claude/skills', expected_claude_skills, sync_claude_skills, claude_skill_drift),
+            ('.github/skills', expected_copilot_skills, sync_copilot_skills, copilot_skill_drift),
+        ]
+        for mirror_root, expected_fn, sync_fn, drift_fn in mirrors:
+            with self.subTest(mirror=mirror_root), tempfile.TemporaryDirectory() as directory:
+                root = Path(directory)
+                skill = root / '.agents/skills/ttrpg-test'
+                (skill / 'agents').mkdir(parents=True)
+                (skill / 'references').mkdir()
+                (skill / 'SKILL.md').write_text('---\nname: ttrpg-test\ndescription: Synthetic test skill.\n---\n', encoding='utf-8')
+                (skill / 'agents/openai.yaml').write_text('interface: {}\n', encoding='utf-8')
+                (skill / 'references/guide.md').write_text('# Guide\n', encoding='utf-8')
+                unrelated = root / mirror_root / 'personal/SKILL.md'
+                unrelated.parent.mkdir(parents=True)
+                unrelated.write_text('personal\n', encoding='utf-8')
+                outputs = expected_fn(root)
+                self.assertIn(f'{mirror_root}/ttrpg-test/SKILL.md', outputs)
+                self.assertNotIn(f'{mirror_root}/ttrpg-test/agents/openai.yaml', outputs)
+                self.assertEqual(sync_fn(root), 2)
+                self.assertEqual(drift_fn(root), [])
+                (skill / 'references/guide.md').unlink()
+                self.assertTrue(drift_fn(root))
+                sync_fn(root)
+                self.assertFalse((root / mirror_root / 'ttrpg-test/references/guide.md').exists())
+                self.assertEqual(unrelated.read_text(encoding='utf-8'), 'personal\n')
 
     def test_release_refuses_campaign_data_even_if_added_to_allowlist(self):
         with tempfile.TemporaryDirectory() as directory:

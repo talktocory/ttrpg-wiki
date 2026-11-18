@@ -269,6 +269,6 @@ def validate_project(root: Path = ROOT) -> list[str]:
                 raise ValueError('Legacy namespace or machine-specific path')
         except (ValueError, yaml.YAMLError, OSError, KeyError, TypeError) as exc:
             errors.append(f'{relative}: {exc}')
-    if skill_count != 8:
-        errors.append(f'Expected eight canonical skills; found {skill_count}')
+    if skill_count != 9:
+        errors.append(f'Expected nine canonical skills; found {skill_count}')
     return errors

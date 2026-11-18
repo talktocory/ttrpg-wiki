@@ -1,0 +1,18 @@
+{
+  "source": ".agents/skills",
+  "files": [
+    "ttrpg-campaign-init/references/configuration-fields.md",
+    "ttrpg-campaign-init/SKILL.md",
+    "ttrpg-map-create/SKILL.md",
+    "ttrpg-npc-dialogue/SKILL.md",
+    "ttrpg-player-safe/SKILL.md",
+    "ttrpg-reward-ledger/SKILL.md",
+    "ttrpg-session-prep/SKILL.md",
+    "ttrpg-token-create/assets/reference-tokens/README.md",
+    "ttrpg-token-create/references/roll20-token-guidance.md",
+    "ttrpg-token-create/scripts/finalize_token.py",
+    "ttrpg-token-create/SKILL.md",
+    "ttrpg-wiki-ingest/SKILL.md",
+    "ttrpg-wiki-maintenance/SKILL.md"
+  ]
+}

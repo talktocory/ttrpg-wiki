@@ -12,31 +12,21 @@ Paste this into a new conversation:
 
 `AGENTS.md` tells Codex how to look after your notes. It should read your campaign settings and explain what it can do before you begin.
 
-## 2. Try one small task
+## 2. Configure the campaign
 
-Point Codex to a set of notes, or paste a short note into the conversation. For example:
+Before adding notes, ask Codex to guide the initial settings:
 
-> Read these session notes. Show me the updates you would make to the campaign, and flag anything you are unsure about. Do not save changes yet.
+> Use ttrpg-campaign-init to help me configure this campaign. Preserve choices already in campaign.yaml, ask about the essential settings first, and show me the exact proposed changes before saving them.
 
-Review the proposed text. You can ask for changes, reject an idea, or approve only part of the suggestion.
+Review the proposal and leave any undecided settings open. When it is ready, say:
 
-## 3. Save the changes you want
+> The proposed campaign settings are approved. Please update campaign.yaml and record the change in wiki/log.md.
 
-When the proposal is ready, say:
+Codex should change only the approved settings and the activity log, then report what it saved.
 
-> The proposed changes are approved. Please proceed with the appropriate wiki updates
+## Continue with your first notes
 
-Codex should save the approved pages, update the contents page and activity log, and tell you which files changed. If it cannot save directly, ask for the updated files to save yourself.
-
-You are ready to continue with the [first-campaign walkthrough](../getting-started.md) or [everyday GM guide](../gm-guide.md).
-
-## Look up details during play
-
-Ask Codex to find the backstory, lore, or storyline detail you need in the campaign. For example:
-
-> Remind me of this NPC's backstory and how it connects to the current storyline. Keep it brief, link the source pages, and tell me if any detail is still a draft.
-
-A question like this is a lookup, not a request to edit the wiki. You only need the approval step if you want to save new or changed material.
+Once Codex can access and save the campaign, continue with [bring in one set of notes](../getting-started.md#3-bring-in-one-set-of-notes). That walkthrough covers proposing, reviewing, and saving your first wiki update. For ongoing use, see the [everyday GM guide](../gm-guide.md).
 
 ## Generate maps and character tokens
 
@@ -54,4 +44,4 @@ Ask for revisions after reviewing the result. The project defaults to one image 
 - **It does not follow a task's instructions:** try naming the skill, such as `ttrpg-session-prep`. You can also ask it to read `.agents/skills/ttrpg-session-prep/SKILL.md`. Starting a fresh conversation may help if a newly added skill is missing.
 - **It cannot read a PDF or create an image:** ask it to explain what is missing. You can supply text or existing artwork, or ask for a description you can use elsewhere.
 
-See [what has been tested](compatibility.md) for known limits. For further setup help, use the official [Codex skill guide](https://learn.chatgpt.com/docs/build-skills) and [project instruction guide](https://learn.chatgpt.com/docs/agent-configuration/agents-md), checked 2026-11-17.
+See [what has been tested](compatibility.md) for known limits. For further setup help, use the official [Codex skill guide](https://learn.chatgpt.com/docs/build-skills) and [project instruction guide](https://learn.chatgpt.com/docs/agent-configuration/agents-md), checked 2026-11-18.

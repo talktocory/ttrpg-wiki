@@ -1,0 +1,4 @@
+interface:
+  display_name: "TTRPG Campaign Setup"
+  short_description: "Guide safe first-time campaign configuration"
+  default_prompt: "Use $ttrpg-campaign-init to guide me through setting up this campaign and propose campaign.yaml changes for review."

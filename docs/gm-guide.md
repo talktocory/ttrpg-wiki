@@ -21,11 +21,11 @@ Questions can draw on private GM notes when the answer is for you. For a recap o
 
 **A lookup needs no save or approval step.** It should not edit the wiki just because you asked a question. If you want to retain an analysis or develop a missing detail, review the proposed addition and use the approval prompt below.
 
-## The important last step: save what you approve
+## Save what you approve
 
 Brainstorming and proposed edits are still in the conversation until they are saved into the wiki. Once you have reviewed a proposal and want to keep it, use:
 
-> The proposed changes are approved. Please proceed with the appropriate wiki updates
+> The proposed changes are approved. Please proceed with the appropriate wiki updates.
 
 The assistant should apply the approved changes, update the index and activity log, and report which files changed. If only part is approved, name those parts. If it cannot edit local files, it should provide updated files for you to save. You do not need to repeat approval for the same changes once it has been given.
 
@@ -33,13 +33,13 @@ This is how good ideas, answers, and played events become part of your campaign'
 
 ## Everyday requests
 
-You can ask for a small piece of creative help or a question about the whole campaign:
+You can ask for focused creative help or pose a question about the whole campaign:
 
 | Prompt | What to look for in the response |
 | --- | --- |
 | “Create a table of random items for the wizard's chamber” | Items that suit the room and tone, with any new details clearly proposed. Creating the table does not mean the party found or received its contents. |
 | “Add a tragic backstory for Princess Darla” | A story that respects her existing notes and relationships. New history remains proposed until you approve it; it is not automatically known to the players. |
-| “What loose ends need to be dealt with?” | Unanswered clues, promises, character goals, NPC/faction issues, and unfinished scenes, grounded in current pages. Uncertain conclusions should be identified. |
+| “What loose ends need to be dealt with?” | Unanswered clues, promises, character goals, NPC and faction issues, and unfinished scenes, grounded in current pages. Uncertain conclusions should be identified. |
 
 These are examples of requests, not established details in your campaign. A question about loose ends can be answered without changing any files. If you want to keep the resulting analysis or turn it into preparation, review the proposed destinations and use the approval prompt above.
 
@@ -61,7 +61,7 @@ Add your original notes to `raw/` or paste them into chat. Ask what should chang
 
 > Organize these session notes. Show me the proposed session record, updates to NPCs and locations, confirmed rewards, and open questions. Do not advance plans beyond what we actually played.
 
-Review the proposed updates, then use “The proposed changes are approved. Please proceed with the appropriate wiki updates” when ready. You can approve only selected changes. Once applied, `wiki/index.md` helps you find the pages, while `wiki/log.md` records that the update was made. You do not need to maintain those files by hand when your assistant can edit the folder.
+Review the proposed updates, then use the approval prompt above when ready. You can approve only selected changes. Once applied, `wiki/index.md` helps you find the pages, while `wiki/log.md` records that the update was made. You do not need to maintain those files by hand when your assistant can edit the folder.
 
 For rewards, ask what was actually received. Promised payments, planned treasure, purchases, and current spending money are different things. The reward skill keeps those distinctions and can compare awards with a budget only if you have chosen one. It does not assume levels, gold, or a particular game economy.
 
@@ -110,11 +110,11 @@ The `.md` files are ordinary text with simple formatting and links. You may edit
 
 **Do I need Python or coding experience?** No, not for normal writing and organization. The [optional tools reference](scripts.md) explains the checks and image utility if you want them. Most of the other scripts are for people maintaining the project itself.
 
-**Do I need to edit the settings file myself?** No. Describe your game and preferences, ask for proposed settings, and review them before saving. See [campaign settings](configuration.md).
+**Do I need to edit the settings file myself?** No. Ask the assistant to use `ttrpg-campaign-init`; it will gather the relevant choices, preserve existing settings, and show an exact proposal before saving. See [campaign settings](configuration.md).
 
-**What are AGENTS.md and CLAUDE.md telling the assistant to do?** They tell it to find your campaign folder, read the wiki's rules and game settings, and follow the instructions for the task. A skill may be installed elsewhere on your computer; its installation folder is not where your campaign notes belong. If the assistant only has files you attach to chat, it should return proposed edits and, after approval, updated files for you to save. It must not claim to have edited your computer's files when it cannot access them. You do not need to move your campaign into the skill folder.
+**What do `AGENTS.md` and `CLAUDE.md` tell the assistant to do?** They tell it to find your campaign folder, read the wiki's rules and game settings, and follow the instructions for the task. A skill may be installed elsewhere on your computer; its installation folder is not where your campaign notes belong. You do not need to move your campaign into the skill folder.
 
-**What if the assistant cannot see a file?** Attach the relevant file or select the correct campaign folder in your AI tool. Ask it to say which sources it actually read. A chat with attached files may return updated files for you to save rather than editing your computer directly.
+**What if the assistant cannot see a file?** Check that it has the correct campaign folder and permission to read and save it. For an external source, place the file under `raw/` or attach it to a folder-backed session. Do not use an attachment-only chat as the campaign workspace.
 
 **What if the assistant invents a rule or campaign fact?** Ask for its source. Keep unsupported fiction as Draft and rules as Unverified until you decide or provide the correct reference. No game system's mechanics are assumed by default.
 
@@ -126,6 +126,7 @@ Use these names when your assistant needs a more explicit instruction. A skill i
 
 | Task | Skill name |
 | --- | --- |
+| Configure a new or incomplete campaign | `ttrpg-campaign-init` |
 | Organize source or session notes | `ttrpg-wiki-ingest` |
 | Check and tidy the notebook | `ttrpg-wiki-maintenance` |
 | Prepare a session | `ttrpg-session-prep` |

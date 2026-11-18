@@ -3,7 +3,10 @@ __pycache__/
 *.py[cod]
 .pytest_cache/
 .coverage
-dist/
+dist/*
+!dist/skills/
+dist/skills/*
+!dist/skills/ttrpg-*.zip
 .tmp/
 .env
 .env.*

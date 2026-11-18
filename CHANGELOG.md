@@ -2,6 +2,12 @@
 
 ## Unreleased
 
+- Added `ttrpg-campaign-init` for guided, proposal-first setup of `campaign.yaml` and updated the first-campaign and platform onboarding documentation to use it.
+- Included the small deterministic skill ZIPs under `dist/skills/` for upload-based hosts, with CI checks for missing, stale, or obsolete packages; the template release ZIP remains generated and uncommitted.
+- Added generated `.claude/skills/` project mirrors for native Claude Code discovery and documented account-level skill upload for Claude.ai, Desktop, and Cowork.
+- Added generated `.github/skills/` project mirrors and native discovery guidance for GitHub Copilot in VS Code, Copilot CLI, and cloud agent.
+- Limited supported Claude setup to Cowork with persistent folder access and Claude Code; attachment-only chat remains a recovery mechanism rather than an advertised wiki workflow.
+
 ## 0.2.0 - 2026-11-18
 
 - Adopted the project name TTRPG Wiki and renamed the template archive and its top-level folder to match.

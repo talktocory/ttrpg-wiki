@@ -8,11 +8,11 @@ The other scripts mainly help contributors maintain and distribute the project. 
 
 ## Which tool do I need?
 
-| Program | What it does | Who might run it? | Changes files? |
+| Program | Purpose | Intended users | File effects |
 | --- | --- | --- | --- |
 | [validate.py](#validatepy) | Reports configuration, link, metadata, and visibility problems | GMs wanting a structural check; contributors | No campaign or framework edits |
-| [sync_adapters.py](#sync_adapterspy) | Copies the shared agent instructions into provider-specific instruction files | Contributors or GMs who customize `AGENTS.md` | Yes, unless using `--check` |
-| [package_skills.py](#package_skillspy) | Builds installable ZIP files for the eight skills | Maintainers; users who need to build their own skill packages | Writes skill ZIPs under `dist/skills/` |
+| [sync_adapters.py](#sync_adapterspy) | Regenerates host instructions and discovered skill mirrors | Contributors changing `AGENTS.md` or skills | Yes, unless using `--check` |
+| [package_skills.py](#package_skillspy) | Builds installable ZIP files for the nine skills | Maintainers; users who need to build their own skill packages | Writes skill ZIPs under `dist/skills/` |
 | [build_release.py](#build_releasepy) | Builds a distributable copy of the blank project template | Release maintainers | Writes the template ZIP under `dist/` |
 | [wiki_tools.py](#wiki_toolspy) | Supplies shared validation, Markdown, path, and checksum functions | Other scripts import it; users do not run it directly | No campaign or framework edits |
 | [finalize_token.py](#finalize_tokenpy) | Crops supplied art into a PNG token | GMs who want local token processing | Writes the requested image |
@@ -54,7 +54,7 @@ It reads `campaign.yaml`, Markdown files, and the skills' `agents/openai.yaml` m
 
 - Required configuration fields, supported values, numeric ranges, duplicate YAML keys, configured reward units, and optional profile paths.
 - Local Markdown links, image references, and heading destinations. It checks ordinary inline links and reference definitions, not every possible Markdown or HTML construct.
-- The eight canonical skills' names, descriptions, folder names, and selected Codex UI metadata.
+- The nine canonical skills' names, descriptions, folder names, and selected Codex UI metadata.
 - Independent `status` and `visibility` fields on substantive campaign pages, and visibility matching the storage area. Navigation READMEs are exempt from these page checks.
 - Player-safe pages linking outside the designated player-safe text/media areas, selected legacy namespace references, and machine-specific paths in Markdown.
 
@@ -76,7 +76,7 @@ Read-only check:
 python scripts/sync_adapters.py --check
 ```
 
-Regenerate the adapters after deliberately editing `AGENTS.md`:
+Regenerate the adapters after deliberately editing `AGENTS.md` or a canonical skill under `.agents/skills/`:
 
 ```text
 python scripts/sync_adapters.py
@@ -87,10 +87,12 @@ The generator reads [AGENTS.md](../AGENTS.md) and writes:
 - `.github/copilot-instructions.md`
 - `CLAUDE.md` for optional Claude Code use
 - `docs/platforms/claude-folder-instructions.md` for Desktop folder/task instructions
+- `.claude/skills/` mirrors for Claude Code project-skill discovery
+- `.github/skills/` mirrors for GitHub Copilot project-skill discovery
 
-The Copilot and Claude Code files receive the full instructions with a short introduction. The Claude Desktop page puts only the campaign instructions into a clearly marked box for the GM to copy; the `Framework development` section and its contributor commands are left out. All campaign policy still comes from the same `AGENTS.md` source. OpenCode v2 reads `AGENTS.md` and `.agents/skills/` natively, so it does not need another generated adapter.
+The Copilot and Claude Code files receive the full instructions with a short introduction. The Claude Desktop page puts only the campaign instructions into a clearly marked box for the GM to copy; the `Framework development` section and its contributor commands are left out. Claude Code and Copilot mirrors include each skill's instructions, references, scripts, and assets but omit Codex-specific `agents/openai.yaml` metadata. All campaign policy and skill content still come from `AGENTS.md` and `.agents/skills/`. OpenCode v2 reads those canonical locations natively, so it does not need another generated adapter.
 
-**File effects:** generation replaces those three files, including any direct edits made to them. Make shared policy edits in `AGENTS.md`. `--check` compares expected content and reports drift without writing anything. A change only to the shared operating guide does not change the generated adapter text; the adapters already direct the assistant to read that guide.
+**File effects:** generation replaces the three instruction files and managed Claude Code and Copilot skill mirrors. It removes obsolete mirror files recorded in each manifest while preserving unrelated project skills under `.claude/skills/` and `.github/skills/`. Make shared policy edits in `AGENTS.md` and skill edits in `.agents/skills/`. `--check` compares expected content and reports missing, stale, or obsolete generated files without writing anything. A change only to the shared operating guide does not change the generated adapter text; the adapters already direct the assistant to read that guide.
 
 **Result:** exit code `0` after generation or a matching check; `1` when `--check` finds missing or outdated adapters. `--help` lists the supported command options.
 
@@ -111,14 +113,22 @@ It first runs the project validation checks. For each skill directory under `.ag
 1. Includes the skill's instructions, metadata, scripts, references, and assets, excluding Python bytecode/cache files.
 2. Adds the framework license and copies the shared operating guide and page-format reference when linked by the skill.
 3. Rewrites those shared reference links inside the packaged `SKILL.md` so they resolve within the ZIP. The source skill is not edited.
-4. Checks that local Markdown file links can resolve to package members. This package check does not validate heading fragments.
+4. Checks that local Markdown file links resolve to package members. This package check does not validate heading fragments.
 5. Writes one ZIP containing one top-level skill folder. Entry order and timestamps are fixed to make repeated builds consistent.
 
 **Output:** `dist/skills/ttrpg-<skill-name>.zip`, with each path printed. Existing ZIPs with the same names are replaced. The script does not remove unrelated old files from `dist/skills/`. `--help` shows usage; there are no custom packaging options.
 
 Normal campaign directories such as `raw/` and `wiki/gm/` are not bundled. However, files placed inside a skill directory are included: keep private campaign references and personal art out of those authoring directories.
 
-**Limits:** it does not upload or install the ZIPs, include runtime campaign settings, provide image-generation tools, or run live AI-host tests. Validation or unresolved package-reference failures stop the build with a nonzero exit status. Earlier ZIPs can remain from a previous or partially completed build; check the command result before distributing them.
+The prepared skill ZIPs are committed so users of upload-based hosts can use them without running Python. Check that the committed packages exactly match their sources without writing files:
+
+```text
+python scripts/package_skills.py --check
+```
+
+Normal packaging replaces the canonical ZIPs and removes obsolete `ttrpg-*.zip` packages left by renamed or deleted skills. It leaves other files under `dist/skills/` alone. The `--check` form reports missing, stale, or obsolete canonical packages and exits nonzero instead of changing them.
+
+**Limits:** it does not upload or install the ZIPs, include runtime campaign settings, provide image-generation tools, or run live AI-host tests. Validation failures or unresolved package references stop the build with a nonzero exit status. A partially completed build can leave a mix of replaced and earlier packages; rerun the command successfully and use `--check` before distributing them.
 
 ## build_release.py
 
@@ -150,7 +160,7 @@ Source: [scripts/wiki_tools.py](../scripts/wiki_tools.py).
 
 Its main responsibilities are:
 
-| Functions | Responsibility |
+| Functions | Responsibilities |
 | --- | --- |
 | `load_yaml`, `UniqueLoader`, `unique_mapping` | Read YAML safely and reject duplicate keys |
 | `files` | Enumerate project files while excluding designated local/generated directories |
@@ -190,7 +200,7 @@ For example, add `--ring-width 12 --ring-color 808080` for a gray frame. `--help
 
 **File effects:** writes the requested image and refuses an existing output unless `--force` is supplied. It always refuses using the source path as the output. It does not update character pages, provenance notes, the index, or the activity log.
 
-**Result:** prints the output path and dimensions on success and exits `0`. Invalid arguments or handled processing/file errors print a message and exit nonzero. Center-cropping can remove important details; inspect the output before approval. Processing does not establish artwork rights or player-safe status.
+**Result:** prints the output path and dimensions on success and exits with status `0`. Invalid arguments or handled processing and file errors print a message and exit with a nonzero status. Center-cropping can remove important details; inspect the output before approval. Processing does not establish artwork rights or player-safe status.
 
 ## test_framework.py
 

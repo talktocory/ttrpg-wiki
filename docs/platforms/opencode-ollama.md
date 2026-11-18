@@ -44,15 +44,31 @@ Use OpenCode's **Plan** agent for the first request so ordinary project files re
 
 Check that it identifies the intended campaign and local model. Review any request for a paid integration, outside-folder access, or an unexplained shell command before allowing it.
 
-## 4. Try one proposed update
+## 4. Configure the campaign
 
-Name the relevant skill when you want the most reliable task routing. In OpenCode, prefix its ID with `@`:
+Keep using the **Plan** agent while gathering the initial settings. OpenCode prefixes skill IDs with `@`:
+
+> Use @ttrpg-campaign-init to help me configure this campaign. Preserve choices already in campaign.yaml, ask about the essential settings first, and show me the exact proposed changes without saving them.
+
+Review the proposal and leave any undecided settings open. The Plan agent cannot edit ordinary campaign files.
+
+## 5. Apply the approved settings
+
+Switch to OpenCode's **Build** agent and say:
+
+> The proposed campaign settings are approved. Please update campaign.yaml and record the change in wiki/log.md.
+
+OpenCode should ask before editing. Choose **Allow once** after checking that the proposed paths and changes match the approved settings. It should change only `campaign.yaml` and the activity log, then report what it saved.
+
+## 6. Try one proposed wiki update
+
+Switch back to the **Plan** agent. Name the relevant skill when you want the most reliable task routing:
 
 > Use @ttrpg-wiki-ingest to read raw/markdown/my-session-notes.md. Show the exact wiki updates you propose, separate confirmed events from ideas, and keep secrets private. Do not save anything yet.
 
 Review the proposed text and request revisions as needed. The Plan agent cannot edit ordinary campaign files.
 
-## 5. Apply only approved changes
+## 7. Apply only approved wiki changes
 
 After approving the proposal, switch to OpenCode's **Build** agent and say:
 

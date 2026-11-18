@@ -22,6 +22,22 @@ def zip_bytes(entries: dict[str, bytes]) -> bytes:
             archive.writestr(info, content)
     return stream.getvalue()
 
+def skill_archives(root: Path = ROOT) -> dict[str, bytes]:
+    return {
+        skill.name + '.zip': zip_bytes(skill_entries(skill, root))
+        for skill in sorted((root / '.agents/skills').iterdir())
+        if skill.is_dir()
+    }
+
+def archive_errors(output: Path, expected: dict[str, bytes]) -> list[str]:
+    existing = {path.name: path for path in output.glob('ttrpg-*.zip') if path.is_file()} if output.is_dir() else {}
+    errors = [f'Missing committed skill package: {name}' for name in sorted(set(expected) - set(existing))]
+    errors.extend(f'Obsolete committed skill package: {name}' for name in sorted(set(existing) - set(expected)))
+    for name in sorted(set(expected) & set(existing)):
+        if existing[name].read_bytes() != expected[name]:
+            errors.append(f'Stale committed skill package: {name}')
+    return errors
+
 def skill_entries(skill: Path, root: Path = ROOT) -> dict[str, bytes]:
     entries = {}
     if (root / 'LICENSE').is_file():
@@ -62,18 +78,30 @@ def skill_entries(skill: Path, root: Path = ROOT) -> dict[str, bytes]:
 
 def main() -> int:
     parser = argparse.ArgumentParser(description=__doc__)
-    parser.parse_args()
+    parser.add_argument('--check', action='store_true', help='check committed packages without writing files')
+    args = parser.parse_args()
     errors = validate_project()
     if errors:
         print('\n'.join(errors))
         return 1
     output = ROOT / 'dist/skills'
+    archives = skill_archives()
+    if args.check:
+        errors = archive_errors(output, archives)
+        if errors:
+            print('\n'.join(errors))
+            return 1
+        print(f'Committed skill packages match {len(archives)} source skills.')
+        return 0
     output.mkdir(parents=True, exist_ok=True)
-    for skill in sorted((ROOT / '.agents/skills').iterdir()):
-        if skill.is_dir():
-            archive = output / (skill.name + '.zip')
-            archive.write_bytes(zip_bytes(skill_entries(skill)))
-            print(archive.relative_to(ROOT).as_posix())
+    for obsolete in sorted(output.glob('ttrpg-*.zip')):
+        if obsolete.name not in archives:
+            obsolete.unlink()
+            print(f'Removed {obsolete.relative_to(ROOT).as_posix()}')
+    for name, content in archives.items():
+        archive = output / name
+        archive.write_bytes(content)
+        print(archive.relative_to(ROOT).as_posix())
     return 0
 
 if __name__ == '__main__':

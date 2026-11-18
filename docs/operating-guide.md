@@ -6,7 +6,7 @@ Use one campaign per workspace. The GM controls truth and reveal decisions. Host
 
 Locate the intended campaign workspace. Read its `AGENTS.md`, `campaign.yaml`, `wiki/index.md`, relevant recent log entries, and relevant current pages. Read only needed sources. Content under `examples/` is never campaign evidence. Resolve competing workspace targets before writing.
 
-Check actual file, shell, PDF, and image capabilities. With supplied files only, return proposals or downloadable updates with destination paths; never claim local edits. Ask for needed files only when their absence prevents useful progress.
+Confirm the available file, shell, PDF, and image capabilities. When working only from supplied files, return proposals or downloadable updates with destination paths; never claim to have made local edits. Ask for files only when their absence prevents useful progress.
 
 ## Answer campaign questions
 
@@ -23,19 +23,19 @@ Substantive pages use YAML frontmatter:
 | Field | Values | Meaning |
 | --- | --- | --- |
 | status | Canon, Draft, Unused, Retired | Established, developing, prepared but unplayed, or superseded |
-| visibility | GM, Player-safe | Private knowledge/preparation or reviewed player material |
+| visibility | GM, Player-safe | Private knowledge and preparation, or reviewed player material |
 
-Use Draft for uncertain new material. Canon is not permission to reveal. Attribute rumors, beliefs, lies, and observations. Approval of preparation does not mean events happened, dialogue was spoken, secrets were discovered, or rewards were paid. Promote material to Canon only with explicit approval or approved confirmed session evidence. Label local status and reveal limits beside mixed content.
+Use Draft for uncertain new material. Canon is not permission to reveal. Attribute rumors, beliefs, lies, and observations. Approval of preparation does not mean events happened, dialogue was spoken, secrets were discovered, or rewards were paid. Promote material to Canon only with explicit approval or approved confirmed session evidence. Label status and reveal limits beside mixed content.
 
 Legacy secret labels do not establish whether content is true or still a draft. Preserve uncertainty during migration and obtain GM judgment.
 
 ## Proposal and approval
 
-Before campaign edits, present concrete content or an assessable diff in chat, listing sources, exact pages/sections, status changes, private information, player-safe output, unresolved questions, and index/log effects. Do useful preparation before asking approval. Save proposal files only when requested.
+Before campaign edits, present concrete content or an assessable diff in chat, listing sources, exact pages and sections, status changes, private information, player-safe output, unresolved questions, and effects on the index and log. Do useful preparation before asking approval. Save proposal files only when requested.
 
 Wait for approval and apply only approved parts. Approval of the exact scope already in the conversation is sufficient; do not ask again. Brainstorming authorizes a chat draft, not silent edits. Explicit maintenance authorization covers that scope without another round but cannot create fictional events or rewards.
 
-The GM may use “The proposed changes are approved. Please proceed with the appropriate wiki updates” to authorize applying the reviewed proposal. Save the approved wiki pages and update the index and log. This wording requests wiki file updates; it does not by itself request a Git commit or publication. If local editing is unavailable, provide the approved updated files with destination names and explain that the GM must save them.
+The GM may use the following wording to authorize applying the reviewed proposal: “The proposed changes are approved. Please proceed with the appropriate wiki updates.” Save the approved wiki pages and update the index and log. This wording requests wiki file updates; it does not by itself request a Git commit or publication. If local editing is unavailable, provide the approved updated files with destination names and explain that the GM must save them.
 
 After application, update the catalog and append a dated log entry with changed pages and open issues. Keep decisions and follow-ups on current pages. Do not retain proposal archives or link live pages to temporary proposals. Preserve unrelated edits; reconcile files changed since review before applying.
 
@@ -49,7 +49,7 @@ Consult the configured system, edition, references, and approved house rules for
 
 Use only `wiki/player-safe/` and explicitly approved revealed facts. Logs may mix witnessed events and private consequences; they are not blanket safe sources. Do not inspect unrelated secrets to enrich a handout.
 
-Exclude hidden motives, unrevealed places/items, future scenes, private consequences, and unused alternatives. Uncertainty means omission or a reveal question. Inspect titles, links, images, filenames, alt text, metadata, and attachments. Private review notes and excluded facts belong in the GM response, never a saved player handout. Do not link player output to private sources.
+Exclude hidden motives, unrevealed places and items, future scenes, private consequences, and unused alternatives. Uncertainty means omission or a reveal question. Inspect titles, links, images, filenames, alt text, metadata, and attachments. Private review notes and excluded facts belong in the GM response, never a saved player handout. Do not link player output to private sources.
 
 Player text and media belong in `wiki/player-safe/` and `assets/player-safe/`. A media path is not proof its contents were reviewed. The catalog, log, sources, and GM workspace stay private. Share selected reviewed files, not the repository. Paths and YAML labels do not enforce permissions.
 
@@ -63,6 +63,6 @@ Read relevant visual context only. Artwork approval does not establish fictional
 
 Map and token creation include generating new artwork and editing an existing image. When the GM requests an image and a suitable image-generation tool is available, create the actual image within the authorized allowance rather than stopping at a written prompt. In a Codex session with built-in image generation, use that capability and any applicable image-generation instructions. A prompt or brief remains useful when specifically requested or when generation is unavailable; the local token-processing script is only an optional export utility, not the artwork generator.
 
-Without generation, deliver a complete brief/prompt or process supplied art. Never fabricate files or overwrite finals without authorization. Store private art in `assets/vtt/`; copy only reviewed player-visible variants to `assets/player-safe/` through the approval workflow. Publishing, messages, and paid integrations require explicit authorization. Never store credentials in notes.
+Without generation, deliver a complete brief or prompt, or process supplied art. Never fabricate files or overwrite final files without authorization. Store private art in `assets/vtt/`; copy only reviewed player-visible variants to `assets/player-safe/` through the approval workflow. Publishing, messages, and paid integrations require explicit authorization. Never store credentials in notes.
 
-Keep asset links, briefs, provenance, export settings, approval status, and reveal restrictions on the relevant encounter, location, NPC, or player-character page. Do not maintain a parallel wiki tree for VTT notes. Use a separate note only when substantial asset detail would overwhelm the owning page; place it in that page's wiki category and link to it rather than duplicating its contents.
+Keep asset links, briefs, provenance, export settings, approval status, and reveal restrictions on the relevant encounter, location, NPC, or player-character page. Do not maintain a parallel wiki tree for VTT notes. Use a separate note only when substantial asset detail would overwhelm the owning page. Place that note in the same wiki category and link to it rather than duplicating its contents.

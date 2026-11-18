@@ -1,8 +1,9 @@
-"""Generate host instruction adapters from the canonical root instructions."""
+"""Generate host instruction and skill adapters from canonical sources."""
 from __future__ import annotations
 
 import argparse
-from pathlib import Path
+import json
+from pathlib import Path, PurePosixPath
 
 ROOT = Path(__file__).resolve().parents[1]
 OUTPUTS = {
@@ -10,6 +11,10 @@ OUTPUTS = {
     'CLAUDE.md': 'Optional Claude Code instructions',
     'docs/platforms/claude-folder-instructions.md': 'Claude Desktop folder / task instructions',
 }
+CLAUDE_SKILL_ROOT = Path('.claude/skills')
+CLAUDE_SKILL_MANIFEST = CLAUDE_SKILL_ROOT / '.ttrpg-wiki-generated.json'
+COPILOT_SKILL_ROOT = Path('.github/skills')
+COPILOT_SKILL_MANIFEST = COPILOT_SKILL_ROOT / '.ttrpg-wiki-generated.json'
 
 def expected(root: Path = ROOT) -> dict[str, str]:
     body = (root / 'AGENTS.md').read_text(encoding='utf-8')
@@ -21,32 +26,134 @@ def expected(root: Path = ROOT) -> dict[str, str]:
     outputs['docs/platforms/claude-folder-instructions.md'] = (
         generated
         + '# Instructions to Give Claude\n\n'
-        + 'Copy the text in the box below into Claude\'s instructions for your campaign folder. If you are working in an ordinary chat, you can paste it into the conversation or your project instructions instead.\n\n'
+        + 'Copy the text in the box below into Claude\'s instructions for your Cowork campaign folder.\n\n'
         + 'The text tells Claude how to look after your notes, wait for your approval, and keep secrets out of player material. It is addressed to Claude; you do not need to carry out these steps yourself. There are no commands for you to run.\n\n'
         + '## Copy this text\n\n```text\n'
         + campaign_body.strip()
         + '\n```\n\n'
-        + 'Once you have added the instructions, return to the [Claude Desktop guide](claude-desktop.md) and try the first request. If Claude cannot read your campaign folder, attach the relevant files when you ask for help.\n'
+        + 'Once you have added the instructions, return to the [Claude Desktop guide](claude-desktop.md) and try the first request. If Cowork cannot read and save the campaign folder, correct its folder access or use Claude Code instead.\n'
     )
     return outputs
+
+def expected_skill_mirror(root: Path, skill_root: Path, manifest_path: Path) -> dict[str, bytes]:
+    source_root = root / '.agents/skills'
+    outputs = {}
+    managed = []
+    for source in sorted(source_root.rglob('*')):
+        relative = source.relative_to(source_root)
+        if source.is_symlink():
+            raise ValueError(f'Symlink in canonical skill source: {relative.as_posix()}')
+        if not source.is_file() or '__pycache__' in relative.parts or source.suffix in {'.pyc', '.pyo'}:
+            continue
+        if len(relative.parts) > 1 and relative.parts[1] == 'agents':
+            continue
+        destination = skill_root / relative
+        outputs[destination.as_posix()] = source.read_bytes()
+        managed.append(relative.as_posix())
+    manifest = {'source': '.agents/skills', 'files': managed}
+    outputs[manifest_path.as_posix()] = (json.dumps(manifest, indent=2) + '\n').encode('utf-8')
+    return outputs
+
+def expected_claude_skills(root: Path = ROOT) -> dict[str, bytes]:
+    return expected_skill_mirror(root, CLAUDE_SKILL_ROOT, CLAUDE_SKILL_MANIFEST)
+
+def expected_copilot_skills(root: Path = ROOT) -> dict[str, bytes]:
+    return expected_skill_mirror(root, COPILOT_SKILL_ROOT, COPILOT_SKILL_MANIFEST)
+
+def managed_skill_paths(root: Path, skill_root: Path, manifest_path: Path, label: str) -> set[Path]:
+    absolute_manifest = root / manifest_path
+    if not absolute_manifest.is_file():
+        return set()
+    try:
+        data = json.loads(absolute_manifest.read_text(encoding='utf-8'))
+    except (OSError, json.JSONDecodeError) as exc:
+        raise ValueError(f'Invalid {label} skill mirror manifest: {exc}') from exc
+    if not isinstance(data, dict) or data.get('source') != '.agents/skills' or not isinstance(data.get('files'), list):
+        raise ValueError(f'Invalid {label} skill mirror manifest structure')
+    paths = set()
+    for value in data['files']:
+        parts = PurePosixPath(value) if isinstance(value, str) else PurePosixPath('..')
+        if not isinstance(value, str) or not value or '\\' in value or ':' in value or parts.is_absolute() or '..' in parts.parts:
+            raise ValueError(f'Unsafe {label} skill mirror path: {value!r}')
+        paths.add((root / skill_root).joinpath(*parts.parts))
+    return paths
+
+def skill_mirror_drift(root: Path, skill_root: Path, manifest_path: Path, label: str) -> list[str]:
+    outputs = expected_skill_mirror(root, skill_root, manifest_path)
+    drift = []
+    for relative, content in outputs.items():
+        path = root / relative
+        if not path.is_file() or path.read_bytes() != content:
+            drift.append(relative)
+    try:
+        managed = managed_skill_paths(root, skill_root, manifest_path, label)
+    except ValueError:
+        if manifest_path.as_posix() not in drift:
+            drift.append(manifest_path.as_posix())
+        return drift
+    expected_managed = {root / relative for relative in outputs if relative != manifest_path.as_posix()}
+    drift.extend(path.relative_to(root).as_posix() for path in sorted(managed - expected_managed))
+    return drift
+
+def claude_skill_drift(root: Path = ROOT) -> list[str]:
+    return skill_mirror_drift(root, CLAUDE_SKILL_ROOT, CLAUDE_SKILL_MANIFEST, 'Claude Code')
+
+def copilot_skill_drift(root: Path = ROOT) -> list[str]:
+    return skill_mirror_drift(root, COPILOT_SKILL_ROOT, COPILOT_SKILL_MANIFEST, 'Copilot')
+
+def adapter_drift(root: Path = ROOT) -> list[str]:
+    drift = []
+    for relative, content in expected(root).items():
+        path = root / relative
+        if not path.is_file() or path.read_text(encoding='utf-8') != content:
+            drift.append(relative)
+    drift.extend(claude_skill_drift(root))
+    drift.extend(copilot_skill_drift(root))
+    return list(dict.fromkeys(drift))
+
+def sync_skill_mirror(root: Path, skill_root: Path, manifest_path: Path, label: str) -> int:
+    outputs = expected_skill_mirror(root, skill_root, manifest_path)
+    old_managed = managed_skill_paths(root, skill_root, manifest_path, label)
+    expected_managed = {root / relative for relative in outputs if relative != manifest_path.as_posix()}
+    for obsolete in sorted(old_managed - expected_managed):
+        if obsolete.is_file() or obsolete.is_symlink():
+            obsolete.unlink()
+    for relative, content in outputs.items():
+        path = root / relative
+        path.parent.mkdir(parents=True, exist_ok=True)
+        path.write_bytes(content)
+    absolute_skill_root = root / skill_root
+    for directory in sorted((path for path in absolute_skill_root.rglob('*') if path.is_dir()), key=lambda path: len(path.parts), reverse=True):
+        try:
+            directory.rmdir()
+        except OSError:
+            pass
+    return len(outputs) - 1
+
+def sync_claude_skills(root: Path = ROOT) -> int:
+    return sync_skill_mirror(root, CLAUDE_SKILL_ROOT, CLAUDE_SKILL_MANIFEST, 'Claude Code')
+
+def sync_copilot_skills(root: Path = ROOT) -> int:
+    return sync_skill_mirror(root, COPILOT_SKILL_ROOT, COPILOT_SKILL_MANIFEST, 'Copilot')
 
 def main() -> int:
     parser = argparse.ArgumentParser(description=__doc__)
     parser.add_argument('--check', action='store_true', help='Report drift without changing files')
     args = parser.parse_args()
-    drift = []
-    for relative, content in expected().items():
-        path = ROOT / relative
-        if args.check:
-            if not path.is_file() or path.read_text(encoding='utf-8') != content:
-                drift.append(relative)
-        else:
+    if args.check:
+        drift = adapter_drift()
+    else:
+        for relative, content in expected().items():
+            path = ROOT / relative
             path.parent.mkdir(parents=True, exist_ok=True)
             path.write_text(content, encoding='utf-8', newline='\n')
+        claude_count = sync_claude_skills()
+        copilot_count = sync_copilot_skills()
+        drift = []
     if drift:
         print('Regenerate adapters: ' + ', '.join(drift))
         return 1
-    print('Instruction adapters match.' if args.check else 'Generated three instruction adapters.')
+    print('Instruction, Claude Code, and Copilot skill adapters match.' if args.check else f'Generated three instruction adapters, {claude_count} Claude Code skill files, and {copilot_count} Copilot skill files.')
     return 0
 
 if __name__ == '__main__':

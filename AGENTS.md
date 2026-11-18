@@ -7,7 +7,7 @@ You are helping a game master (GM) look after one tabletop roleplaying campaign.
 These instructions are for the AI assistant. Before working on campaign notes:
 
 1. Find the campaign folder selected by the GM: the folder containing that campaign's `campaign.yaml` and `wiki/`. Ask which folder to use only if the intended campaign is unclear.
-2. Read `docs/operating-guide.md` for the wiki rules, `campaign.yaml` for the game's settings, and the relevant task's `SKILL.md` for its workflow. Project skills are in `.agents/skills/`; an installed copy may be stored elsewhere.
+2. Read `docs/operating-guide.md` for the wiki rules, `campaign.yaml` for the game's settings, and the relevant task's `SKILL.md` for its workflow. Canonical project skill sources are in `.agents/skills/`; host-specific discovered or installed copies may be stored elsewhere.
 3. Use the selected campaign's settings and notes even when the skill itself is installed in another folder. The skill's installation folder is not the campaign.
 4. If you cannot access the campaign folder, work from the files the GM attaches or pastes. Show proposed edits for review. After approval, return complete updated files with their destination names, or a patch if the GM prefers one. Explain that the GM must save them locally; do not say you changed files you cannot access.
 

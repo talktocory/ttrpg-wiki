@@ -40,14 +40,13 @@ A **skill** is a prepared set of task instructions. You can usually ask in ordin
 ## Start your campaign
 
 1. Download or copy the project into a **private folder for one campaign**. A private GitHub repository is optional.
-2. Follow the setup guide for [Codex](docs/platforms/codex.md), [Claude Desktop](docs/platforms/claude-desktop.md), [GitHub Copilot](docs/platforms/github-copilot.md), or [OpenCode v2 with an Ollama model](docs/platforms/opencode-ollama.md).
-3. Tell the assistant your game, edition, campaign name, and preferences. Ask it to propose your [campaign settings](docs/configuration.md).
-4. Add notes to `raw/` or develop an idea in chat. Ask the assistant to ingest that material and propose wiki updates.
-5. Review the proposed changes and request revisions. When ready, approve the parts you want saved:
+2. Follow the setup guide for [Codex](docs/platforms/codex.md), [Claude Desktop or Claude Code](docs/platforms/claude-desktop.md), [GitHub Copilot](docs/platforms/github-copilot.md), or [OpenCode v2 with an Ollama model](docs/platforms/opencode-ollama.md). It will help you connect the assistant and configure your [campaign settings](docs/configuration.md).
+3. Add notes to `raw/` or develop an idea in chat. Ask the assistant to ingest that material and propose wiki updates.
+4. Review the proposed changes and request revisions. When ready, approve the parts you want saved:
 
 > The proposed changes are approved. Please proceed with the appropriate wiki updates
 
-The assistant should save the approved pages, update the campaign index and activity log, and report what changed. If it cannot edit your folder, save the updated files it provides. A proposal left in chat has not updated the wiki. A Git commit is a separate, optional record of saved changes.
+The assistant should save the approved pages, update the campaign index and activity log, and report what changed. If it cannot edit the campaign workspace, correct its access before treating the task as complete. A proposal left in the conversation has not updated the wiki. A Git commit is a separate, optional record of saved changes.
 
 For a guided first task, follow the [first-campaign walkthrough](docs/getting-started.md).
 
