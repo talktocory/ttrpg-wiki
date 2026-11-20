@@ -1,8 +1,8 @@
-# Optional Tools and Script Reference
+# Python Setup and Script Reference
 
-You can skip this page when preparing sessions, organizing notes, or writing handouts. The [GM guide](gm-guide.md) covers that everyday work without Python or coding.
+You do not need to write Python code to use the campaign notebook. Install Python 3.11 or newer and `requirements-dev.txt` as the baseline for the complete local workflow so the assistant can use the supported validation, configuration, and image utilities when needed. Simple Markdown lookups and writing may work without this environment, but capability then depends more heavily on the selected AI host.
 
-Two optional tools may be useful at your table: the [validator](#validatepy) can find broken links and settings mistakes, and the [token processor](#finalize_tokenpy) can turn a supplied portrait into a token. You can ask your assistant whether it can run either tool for you; it needs Python and the relevant dependency in its working environment. Otherwise, manual review and finished images remain usable.
+Two included tools may be useful at your table: the [validator](#validatepy) can find broken links and settings mistakes, and the [token processor](#finalize_tokenpy) can turn a supplied portrait into a token. You can ask your assistant to run either tool. Manual review and already finished images remain usable when a tool is unavailable.
 
 The other scripts mainly help contributors maintain and distribute the project. Their full explanations are kept below for anyone who wants the details. None of these scripts calls an AI model or requires an API key.
 
@@ -20,7 +20,7 @@ The other scripts mainly help contributors maintain and distribute the project. 
 
 Normal GM use does not require running the maintainer sequence. Prebuilt skill ZIPs can be installed without Python. Validation does not replace the AI maintenance workflow or a GM's review of content.
 
-## Setup for optional utilities
+## Set up the local Python environment
 
 Use Python 3.11 or newer. From the project root, create a virtual environment:
 
@@ -36,7 +36,7 @@ python -m pip install -r requirements-dev.txt
 
 For PowerShell, activation is `./.venv/Scripts/Activate.ps1`; for a POSIX shell, use `source .venv/bin/activate`. If activation is unavailable, invoke the environment's Python directly: `./.venv/Scripts/python.exe` on Windows or `./.venv/bin/python` on POSIX systems. Substitute that executable for `python` in the commands below.
 
-`PyYAML` reads configuration and metadata. `Pillow` processes images. The adapter generator uses only Python's standard library; validation and packaging need PyYAML; token processing needs Pillow; the test suite needs both. The requirements file installs the pinned versions used by the project.
+`PyYAML` reads configuration and metadata. `Pillow` processes images. The adapter generator uses only Python's standard library; validation and packaging need PyYAML; token processing needs Pillow; the test suite needs both. The requirements file installs the pinned versions used by the project. It does not install a PDF parser; PDF reading still depends on the tools available to the AI host and local environment.
 
 Run the examples below from the project root. Most framework scripts locate the repository from their own file location. Token source and output arguments are resolved relative to the shell's working directory. Ordinary Python execution may also create ignored `__pycache__/` files.
 

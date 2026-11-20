@@ -26,7 +26,7 @@ Codex should change only the approved settings and the activity log, then report
 
 ## Continue with your first notes
 
-Once Codex can access and save the campaign, continue with [bring in one set of notes](../getting-started.md#3-bring-in-one-set-of-notes). That walkthrough covers proposing, reviewing, and saving your first wiki update. For ongoing use, see the [everyday GM guide](../gm-guide.md).
+Once Codex can access and save the campaign, continue with [bring in one set of notes](../getting-started.md#4-bring-in-one-set-of-notes). That walkthrough covers proposing, reviewing, and saving your first wiki update. For ongoing use, see the [everyday GM guide](../gm-guide.md).
 
 ## Generate maps and character tokens
 

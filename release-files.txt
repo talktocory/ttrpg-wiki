@@ -81,6 +81,7 @@ docs/platforms/github-copilot.md
 docs/platforms/opencode-ollama.md
 docs/provenance.md
 docs/scripts.md
+docs/validation/github-copilot-vscode-2026-11-19.md
 examples/relay-station/README.md
 examples/relay-station/gm-reference.md
 examples/relay-station/player-recap.md

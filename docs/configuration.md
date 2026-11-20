@@ -4,7 +4,9 @@ Your campaign settings help the assistant use the right game, tone, and table pr
 
 ## Start with what you know
 
-> Use ttrpg-campaign-init to help me configure this campaign. Ask about the essential settings first, follow up on optional settings only when relevant, preserve choices already in campaign.yaml, and show me the exact proposed changes before saving them.
+> Use ttrpg-campaign-init.
+
+On hosts that expose skills as slash commands, `/ttrpg-campaign-init` is sufficient. The skill already instructs the assistant to preserve existing choices, ask for essential settings, and show a proposal before saving.
 
 The assistant should begin with the campaign, system, language or terminology, session length, and table preferences. It should ask about rules references, rewards, VTT use, artwork, and integrations only when they matter to your campaign or when you request a comprehensive setup. You can also provide everything you know in one message; it should not ask for the same details again. You do not need to decide every setting before your first session.
 

@@ -49,7 +49,7 @@ Once you have reviewed the proposal, say:
 
 Claude should save the approved changes directly in the campaign folder and report the files it updated. A proposal still sitting in the conversation has not updated the wiki. If Claude cannot save, correct workspace access before treating the task as complete.
 
-For a more detailed first-note workflow, continue with [bring in one set of notes](../getting-started.md#3-bring-in-one-set-of-notes). For ongoing use, see the [everyday GM guide](../gm-guide.md).
+For a more detailed first-note workflow, continue with [bring in one set of notes](../getting-started.md#4-bring-in-one-set-of-notes). For ongoing use, see the [everyday GM guide](../gm-guide.md).
 
 ## If you get stuck
 

@@ -45,13 +45,15 @@ These are examples of requests, not established details in your campaign. A ques
 
 ## Before a session
 
-Ask the assistant to start with the last played session, unresolved hooks, character goals, and relevant NPCs. A request like this gives it a useful focus:
+Ask the assistant to start with the last played session, unresolved hooks, character goals, and relevant NPCs. The session-preparation skill already contains those instructions, so begin with a minimal request:
 
-> We have about three hours next session. Review where we stopped and suggest a few flexible scenes. Include likely player choices, clues, NPC reactions, and anything I still need to decide. Keep new ideas separate from established facts.
+> Use ttrpg-session-prep to prepare our next session.
+
+Add only the details that differ from your saved settings, such as a shorter session, a particular character focus, or a scheduled date. The assistant can ask for missing choices that materially affect the plan.
 
 Once you like the direction, ask for short notes you can use during play. You can request dialogue, random tables, rules reminders, and map or token needs. Not every session needs all of them.
 
-> For the approved plan, give me short sample lines for the NPCs the party could meet. Keep each speaker's knowledge and secrets in mind.
+> Use ttrpg-npc-dialogue for the approved session plan.
 
 Prepared dialogue and possible outcomes remain ideas until they happen at the table. The assistant should not turn a planned payment, reveal, or faction move into a completed event.
 
@@ -59,7 +61,7 @@ Prepared dialogue and possible outcomes remain ideas until they happen at the ta
 
 Add your original notes to `raw/` or paste them into chat. Ask what should change in the campaign notebook:
 
-> Organize these session notes. Show me the proposed session record, updates to NPCs and locations, confirmed rewards, and open questions. Do not advance plans beyond what we actually played.
+> Use ttrpg-wiki-ingest to ingest these session notes.
 
 Review the proposed updates, then use the approval prompt above when ready. You can approve only selected changes. Once applied, `wiki/index.md` helps you find the pages, while `wiki/log.md` records that the update was made. You do not need to maintain those files by hand when your assistant can edit the folder.
 
@@ -69,7 +71,7 @@ For rewards, ask what was actually received. Promised payments, planned treasure
 
 Tell the assistant which events and facts are known to the characters:
 
-> Draft a short player recap of the latest session. Use the revealed facts listed here and anything already approved in the player-safe notes. If you are unsure whether a detail is known, leave it out and ask me privately.
+> Use ttrpg-player-safe to draft a recap of the latest session.
 
 Review the result, including titles, image contents, and links. Save approved player text under `wiki/player-safe/` and reviewed images under `assets/player-safe/`. Share those selected files. Do not give players the whole campaign folder.
 
@@ -79,9 +81,9 @@ An NPC's motive can be true without being known to the players. Likewise, a rumo
 
 The `ttrpg-map-create` and `ttrpg-token-create` skills can generate actual artwork from your wiki descriptions, edit a selected image, and help prepare the final map or token file. In Codex with built-in image generation available, ask for the image itself; you do not need to stop at a written prompt or supply an existing portrait.
 
-> Use ttrpg-map-create to generate one map image for this encounter from its wiki notes. Use our map settings and established geography, and keep player-visible artwork free of secrets.
+> Use ttrpg-map-create to create a map for this encounter.
 
-> Use ttrpg-token-create to generate one token image for this NPC from their wiki description. Use our preferred art style and token format.
+> Use ttrpg-token-create to create a token for this NPC.
 
 You can attach a sketch, existing portrait, or reference art if you want the image to follow it. After reviewing the result, ask for a particular revision, such as a clearer doorway or a different expression. The default is one generated image per review round, with no automatic extra alternatives or retries. Image generation uses your tool's allowance; switching to a paid alternative requires your approval.
 
@@ -108,7 +110,7 @@ The `.md` files are ordinary text with simple formatting and links. You may edit
 
 ## Common questions
 
-**Do I need Python or coding experience?** No, not for normal writing and organization. The [optional tools reference](scripts.md) explains the checks and image utility if you want them. Most of the other scripts are for people maintaining the project itself.
+**Do I need Python or coding experience?** You do not need coding experience. Install Python 3.11 or newer and `requirements-dev.txt` once as the baseline for the complete local workflow; your assistant can then use the supported validation and image tools. Simple Markdown lookups and writing may work without it. The [Python setup and script reference](scripts.md) provides copyable commands.
 
 **Do I need to edit the settings file myself?** No. Ask the assistant to use `ttrpg-campaign-init`; it will gather the relevant choices, preserve existing settings, and show an exact proposal before saving. See [campaign settings](configuration.md).
 

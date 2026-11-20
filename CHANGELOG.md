@@ -6,6 +6,7 @@
 - Included the small deterministic skill ZIPs under `dist/skills/` for upload-based hosts, with CI checks for missing, stale, or obsolete packages; the template release ZIP remains generated and uncommitted.
 - Added generated `.claude/skills/` project mirrors for native Claude Code discovery and documented account-level skill upload for Claude.ai, Desktop, and Cowork.
 - Added generated `.github/skills/` project mirrors and native discovery guidance for GitHub Copilot in VS Code, Copilot CLI, and cloud agent.
+- Documented the successful 2026-11-19 GitHub Copilot in Visual Studio Code validation, made Python plus the project requirements the baseline for the complete local workflow, and shortened usage examples to the minimal prompts the skills handled successfully.
 - Limited supported Claude setup to Cowork with persistent folder access and Claude Code; attachment-only chat remains a recovery mechanism rather than an advertised wiki workflow.
 
 ## 0.2.0 - 2026-11-18

@@ -2,7 +2,7 @@
 
 These checks are for contributors assessing the project; they are not a setup checklist for running your campaign. For regular play, use the [GM guide](gm-guide.md).
 
-Run these tasks in an isolated copy or an empty temporary workspace, never in the active campaign. Use the original examples under `examples/relay-station/`. These are manual acceptance scenarios, not claims of completed cross-provider tests. For each test, record the date, exact host and build, supplied files, prompt, observed edits or output, result, and limitations.
+Run these tasks in an isolated copy or an empty temporary workspace, never in the active campaign. Use the original examples under `examples/relay-station/`. These are manual acceptance scenarios, not claims of completed cross-provider tests. For each test, record the date, operating system, exact host and build, AI or model version when available, installed extensions or integrations, Python version and packages, supplied files, exact prompt, command approvals, observed edits or output, elapsed time for long asset tasks, result, and limitations. If a version was not captured, say so rather than inferring it.
 
 | Scenario | Acceptance criteria |
 | --- | --- |
