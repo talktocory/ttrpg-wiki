@@ -110,7 +110,7 @@ The `.md` files are ordinary text with simple formatting and links. You may edit
 
 ## Common questions
 
-**Do I need Python or coding experience?** You do not need coding experience. Install Python 3.11 or newer and `requirements-dev.txt` once as the baseline for the complete local workflow; your assistant can then use the supported validation and image tools. Simple Markdown lookups and writing may work without it. The [Python setup and script reference](scripts.md) provides copyable commands.
+**Do I need Python or coding experience?** You do not need coding experience. Install Python 3.11 or newer and `requirements-dev.txt` once as the baseline for the complete local workflow; your assistant can then use the supported validation and image tools. Simple Markdown lookups and writing may work without it. The [Python setup](getting-started.md#2-set-up-the-local-python-environment) provides copyable commands.
 
 **Do I need to edit the settings file myself?** No. Ask the assistant to use `ttrpg-campaign-init`; it will gather the relevant choices, preserve existing settings, and show an exact proposal before saving. See [campaign settings](configuration.md).
 

@@ -13,48 +13,30 @@ Cowork uses skills enabled on your Claude account. Manage those skills through C
 
 Enabled account skills can be selected with Claude's `+` or `/` controls where available, and Claude may invoke them automatically when the request matches. Installing a skill supplies its workflow; it does not give Claude access to the campaign folder or install external tools.
 
-## If you use Cowork
+## Connect Cowork
 
 1. Select your campaign folder in Cowork. It should contain `campaign.yaml` and the `wiki/` folder.
 2. Open [Instructions to Give Claude](claude-folder-instructions.md). Copy **the text in the box** into Claude's instructions for that folder. This tells Claude how to handle your notes and wait for approval.
-3. Start a conversation with this request:
+3. Confirm access without changing anything:
 
 > Help me get started with this campaign notebook. Read the campaign instructions and settings. Tell me which campaign you are using and whether you can read and save its files. Leave everything unchanged for now.
 
-Check that Claude has the right folder. Before adding notes, ask it to configure the campaign:
-
-> Use ttrpg-campaign-init to help me configure this campaign. Preserve choices already in campaign.yaml, ask about the essential settings first, and show me the exact proposed changes before saving them.
-
-Review the proposal, then approve it when ready:
-
-> The proposed campaign settings are approved. Please update campaign.yaml and record the change in wiki/log.md.
-
-Claude should change only the approved settings and activity log. You can then give it one set of notes and ask it to show proposed wiki updates before saving anything.
-
 If Cowork cannot read and save the selected campaign folder, correct the folder selection or permissions before continuing, or use Claude Code. An attachment-only chat is not a substitute for the persistent wiki workspace.
 
-## If you use Claude Code
+## Connect Claude Code
 
-The project includes `CLAUDE.md` for its general instructions and generated project-skill mirrors under `.claude/skills/`. Start Claude Code from the campaign folder; it can discover those skills automatically or you can invoke one directly, such as:
+Start Claude Code from the campaign folder. The project includes `CLAUDE.md` for its instructions and generated skill mirrors under `.claude/skills/`. Claude Code can discover those skills automatically or you can invoke one directly, such as `/ttrpg-campaign-init`.
 
-> /ttrpg-campaign-init Help me configure this campaign. Preserve existing choices and show the proposed changes before saving them.
+Skills enabled on your Claude account may also sync into Claude Code. The committed `.claude/skills/` copies provide repository-local discovery without requiring account sync. Contributors should edit the canonical `.agents/skills/` sources rather than the generated mirrors.
 
-Skills enabled on your Claude account may also sync into Claude Code when you sign in with that account. The committed `.claude/skills/` copies provide repository-local discovery without requiring account sync. They are generated from `.agents/skills/`; contributors should edit the canonical source rather than the mirrors.
+## Continue the shared setup
 
-## Save the changes you want
-
-Once you have reviewed the proposal, say:
-
-> The proposed changes are approved. Please proceed with the appropriate wiki updates.
-
-Claude should save the approved changes directly in the campaign folder and report the files it updated. A proposal still sitting in the conversation has not updated the wiki. If Claude cannot save, correct workspace access before treating the task as complete.
-
-For a more detailed first-note workflow, continue with [bring in one set of notes](../getting-started.md#4-bring-in-one-set-of-notes). For ongoing use, see the [everyday GM guide](../gm-guide.md).
+Return to [connect and configure your assistant](../getting-started.md#3-connect-and-configure-your-assistant), then follow the shared walkthrough for importing notes and approving wiki updates.
 
 ## If you get stuck
 
 - **Claude cannot see the wiki:** select the correct campaign folder and check its permissions. If Cowork still cannot access it, use Claude Code.
-- **It says it saved something, but you cannot find it:** ask for the exact filename and location, then verify the file in the campaign folder before continuing.
+- **A skill is missing:** confirm that the account skill is enabled in Cowork or that the repository skill exists under `.claude/skills/` in Claude Code.
 - **It cannot make an image:** ask for a useful art brief or work from an image you supply.
 
 These steps cover Cowork and Claude Code. See [what has been tested](compatibility.md) for the remaining setup checks.

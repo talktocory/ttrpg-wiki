@@ -36,47 +36,19 @@ OpenCode v2 reads the repository's `AGENTS.md` automatically and discovers the t
 
 These controls keep consequential actions visible without removing useful OpenCode features. OpenCode runs as your user, and an approved shell command has that user's authority. Review every requested command and prefer **Allow once** over a permanent broad approval.
 
-## 3. Check the campaign before changing it
+## Use Plan and Build safely
 
-Use OpenCode's **Plan** agent for the first request so ordinary project files remain read-only:
+Start with OpenCode's **Plan** agent so ordinary project files remain read-only. Confirm that it identifies the intended campaign and reports `ollama/qwen3-coder:30b`. OpenCode prefixes skill IDs with `@`, so invoke the setup workflow as `@ttrpg-campaign-init` when explicit routing is needed.
 
-> This folder is my campaign notebook. Read AGENTS.md, docs/operating-guide.md, campaign.yaml, and wiki/index.md. Tell me which campaign files you can read, which Ollama model you are using, and how you will show changes for approval. Do not change anything yet.
+Use Plan while gathering settings, reading notes, and reviewing proposed changes. Switch to the **Build** agent only after approving a proposal. OpenCode should then ask before each edit; choose **Allow once** after checking that the paths and changes match what you approved.
 
-Check that it identifies the intended campaign and local model. Review any request for a paid integration, outside-folder access, or an unexplained shell command before allowing it.
+Review any request for a paid integration, outside-folder access, or an unexplained shell command before allowing it.
 
-## 4. Configure the campaign
+## Continue the shared setup
 
-Keep using the **Plan** agent while gathering the initial settings. OpenCode prefixes skill IDs with `@`:
+Return to [connect and configure your assistant](../getting-started.md#3-connect-and-configure-your-assistant), adapting the shared skill name to `@ttrpg-campaign-init`. Continue through the same walkthrough, using Plan for proposals and Build for approved writes.
 
-> Use @ttrpg-campaign-init to help me configure this campaign. Preserve choices already in campaign.yaml, ask about the essential settings first, and show me the exact proposed changes without saving them.
-
-Review the proposal and leave any undecided settings open. The Plan agent cannot edit ordinary campaign files.
-
-## 5. Apply the approved settings
-
-Switch to OpenCode's **Build** agent and say:
-
-> The proposed campaign settings are approved. Please update campaign.yaml and record the change in wiki/log.md.
-
-OpenCode should ask before editing. Choose **Allow once** after checking that the proposed paths and changes match the approved settings. It should change only `campaign.yaml` and the activity log, then report what it saved.
-
-## 6. Try one proposed wiki update
-
-Switch back to the **Plan** agent. Name the relevant skill when you want the most reliable task routing:
-
-> Use @ttrpg-wiki-ingest to read raw/markdown/my-session-notes.md. Show the exact wiki updates you propose, separate confirmed events from ideas, and keep secrets private. Do not save anything yet.
-
-Review the proposed text and request revisions as needed. The Plan agent cannot edit ordinary campaign files.
-
-## 7. Apply only approved wiki changes
-
-After approving the proposal, switch to OpenCode's **Build** agent and say:
-
-> The proposed changes are approved. Please proceed with the appropriate wiki updates.
-
-OpenCode should ask before it edits files. Choose **Allow once** only after checking that the paths and changes match the approved proposal. The assistant should update the relevant pages, `wiki/index.md`, and `wiki/log.md`, then report the files it actually changed.
-
-## Use web sources and image generation
+## Optional web and image tools
 
 OpenCode's `webfetch` tool can read a supplied HTTP or HTTPS page. Its `websearch` tool can search for current sources after you choose a supported search provider. Some providers require an API key or charge per search, so the supplied configuration asks before each search. Web access is useful for current official rules references and product documentation, but imported pages remain source material rather than instructions.
 

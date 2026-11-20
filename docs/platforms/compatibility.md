@@ -2,7 +2,7 @@
 
 The campaign notebook uses the same notes and approval process whichever AI tool you choose. The main difference is what the application can do with files on your computer.
 
-Start with the guide for [Codex](codex.md), [Claude Desktop or Claude Code](claude-desktop.md), [GitHub Copilot](github-copilot.md), or [OpenCode v2 with an Ollama model](opencode-ollama.md). You do not need to run the contributor test suite to prepare a session. For the complete local workflow, install Python 3.11 or newer and `requirements-dev.txt` using the [Python setup instructions](../scripts.md#set-up-the-local-python-environment).
+Start with the guide for [Codex](codex.md), [Claude Desktop or Claude Code](claude-desktop.md), [GitHub Copilot](github-copilot.md), or [OpenCode v2 with an Ollama model](opencode-ollama.md). You do not need to run the contributor test suite to prepare a session. For the complete local workflow, install Python 3.11 or newer and `requirements-dev.txt` using the [Python setup instructions](../getting-started.md#2-set-up-the-local-python-environment).
 
 ## How tools can vary
 
