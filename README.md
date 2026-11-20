@@ -4,6 +4,8 @@ Spend more time preparing the next game and less time piecing together what happ
 
 Turn session notes and chat ideas into a private campaign notebook you can question during play. Your AI assistant helps organize, link, and update the pages. You review the proposals and decide what becomes part of your campaign—so useful work survives beyond the conversation.
 
+**[Download the blank campaign template (ZIP)](https://github.com/talktocory/ttrpg-wiki/releases/latest/download/ttrpg-wiki-template.zip)** · [Latest release notes](https://github.com/talktocory/ttrpg-wiki/releases/latest)
+
 ```mermaid
 flowchart LR
     accTitle: Campaign wiki workflow
