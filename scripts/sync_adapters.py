@@ -39,7 +39,7 @@ def expected_skill_mirror(root: Path, skill_root: Path, manifest_path: Path) -> 
     source_root = root / '.agents/skills'
     outputs = {}
     managed = []
-    for source in sorted(source_root.rglob('*')):
+    for source in sorted(source_root.rglob('*'), key=Path.as_posix):
         relative = source.relative_to(source_root)
         if source.is_symlink():
             raise ValueError(f'Symlink in canonical skill source: {relative.as_posix()}')

@@ -18,6 +18,7 @@ def zip_bytes(entries: dict[str, bytes]) -> bytes:
         for name, content in sorted(entries.items()):
             info = ZipInfo(name, date_time=(2026, 1, 1, 0, 0, 0))
             info.compress_type = ZIP_DEFLATED
+            info.create_system = 3  # Unix, matching the file mode stored below.
             info.external_attr = 0o100644 << 16
             archive.writestr(info, content)
     return stream.getvalue()
