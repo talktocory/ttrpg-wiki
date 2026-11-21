@@ -9,13 +9,14 @@ import subprocess
 import sys
 import tempfile
 import unittest
+from unittest.mock import patch
 from zipfile import ZipFile
 from PIL import Image
 
 ROOT = Path(__file__).resolve().parents[1]
 sys.path.insert(0, str(ROOT / 'scripts'))
 from wiki_tools import load_yaml, validate_config, validate_links, validate_opencode_config, safe_path, template_digest
-from package_skills import BUNDLED, archive_errors, skill_entries, zip_bytes
+from package_skills import BUNDLED, archive_errors, skill_archives, skill_entries, zip_bytes
 from build_release import release_entries
 from sync_adapters import claude_skill_drift, copilot_skill_drift, expected_claude_skills, expected_copilot_skills, sync_claude_skills, sync_copilot_skills
 
@@ -99,6 +100,18 @@ class OpenCodeConfigTests(unittest.TestCase):
         self.assertTrue(validate_opencode_config(restricted))
 
 class PackageTests(unittest.TestCase):
+    def test_skill_packages_do_not_depend_on_compression_library(self):
+        expected = skill_archives()
+        with patch('zipfile.zlib', None):
+            self.assertEqual(skill_archives(), expected)
+            for name, content in expected.items():
+                with self.subTest(package=name), ZipFile(io.BytesIO(content)) as archive:
+                    skill = ROOT / '.agents/skills' / Path(name).stem
+                    self.assertEqual(
+                        {member: archive.read(member) for member in archive.namelist()},
+                        skill_entries(skill),
+                    )
+
     def test_committed_package_check_reports_drift(self):
         with tempfile.TemporaryDirectory() as directory:
             output = Path(directory)

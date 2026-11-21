@@ -4,7 +4,7 @@ from __future__ import annotations
 import argparse
 import io
 from pathlib import Path
-from zipfile import ZipFile, ZipInfo, ZIP_DEFLATED
+from zipfile import ZipFile, ZipInfo, ZIP_DEFLATED, ZIP_STORED
 from wiki_tools import ROOT, links, validate_project
 
 BUNDLED = {
@@ -12,20 +12,22 @@ BUNDLED = {
     '../../../wiki/_templates/page-format.md': 'references/framework/page-format.md',
 }
 
-def zip_bytes(entries: dict[str, bytes]) -> bytes:
+def zip_bytes(entries: dict[str, bytes], *, compression: int = ZIP_DEFLATED) -> bytes:
     stream = io.BytesIO()
-    with ZipFile(stream, 'w', compression=ZIP_DEFLATED) as archive:
+    with ZipFile(stream, 'w', compression=compression) as archive:
         for name, content in sorted(entries.items()):
             info = ZipInfo(name, date_time=(2026, 1, 1, 0, 0, 0))
-            info.compress_type = ZIP_DEFLATED
+            info.compress_type = compression
             info.create_system = 3  # Unix, matching the file mode stored below.
             info.external_attr = 0o100644 << 16
             archive.writestr(info, content)
     return stream.getvalue()
 
 def skill_archives(root: Path = ROOT) -> dict[str, bytes]:
+    # Deflate output varies between zlib builds, including zlib-ng on Windows.
+    # Store these small packages uncompressed so --check is portable across CI.
     return {
-        skill.name + '.zip': zip_bytes(skill_entries(skill, root))
+        skill.name + '.zip': zip_bytes(skill_entries(skill, root), compression=ZIP_STORED)
         for skill in sorted((root / '.agents/skills').iterdir())
         if skill.is_dir()
     }
