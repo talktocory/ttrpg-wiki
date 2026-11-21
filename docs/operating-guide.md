@@ -4,7 +4,7 @@ Use one campaign per workspace. The GM controls truth and reveal decisions. Host
 
 ## Start each task
 
-Locate the intended campaign workspace. Read its `AGENTS.md`, `campaign.yaml`, `wiki/index.md`, relevant recent log entries, and relevant current pages. Read only needed sources. Content under `examples/` is never campaign evidence. Resolve competing workspace targets before writing.
+Locate the intended campaign workspace. Read its `AGENTS.md`, `campaign.yaml`, `wiki/index.md`, relevant recent log entries, and relevant current pages. Read only needed sources. Resolve competing workspace targets before writing.
 
 Confirm the available file, shell, PDF, and image capabilities. When working only from supplied files, return proposals or downloadable updates with destination paths; never claim to have made local edits. Ask for files only when their absence prevents useful progress.
 

@@ -17,18 +17,17 @@ flowchart LR
 
 ## What can this TTRPG Wiki do?
 
-| Task | Example prompt |
+| Skill | Function |
 | --- | --- |
-| Import content | "Review the newly added source material and update the wiki." |
-| Look up backstory, lore, or a storyline | “Remind me of this NPC's history and its connection to the current story. Link the source notes.” |
-| Find unfinished business | “What loose ends need to be dealt with?” |
-| Prepare a session | “Prepare our next session.” |
-| Make a random table | “Create a table of random items for the wizard's chamber” |
-| Develop a character | “Add a tragic backstory for Princess Darla” |
-| Write a player recap | “Summarize what the characters learned, keeping GM secrets out.” |
-| Check rewards | “What did the group actually receive? Flag uncertain amounts.” |
-| Generate a map image | “Create a map for this encounter.” |
-| Generate a token image | “Create a token for this NPC.” |
+| [ttrpg-campaign-init](.agents/skills/ttrpg-campaign-init/SKILL.md) | Guide campaign setup while preserving existing choices. |
+| [ttrpg-wiki-ingest](.agents/skills/ttrpg-wiki-ingest/SKILL.md) | Turn source notes and chat ideas into proposed wiki updates. |
+| [ttrpg-session-prep](.agents/skills/ttrpg-session-prep/SKILL.md) | Prepare flexible sessions from campaign context, character goals, and open hooks. |
+| [ttrpg-npc-dialogue](.agents/skills/ttrpg-npc-dialogue/SKILL.md) | Prepare scene dialogue that respects each NPC's voice, knowledge, and secrets. |
+| [ttrpg-player-safe](.agents/skills/ttrpg-player-safe/SKILL.md) | Draft and review player recaps, handouts, and revealed lore for spoilers. |
+| [ttrpg-reward-ledger](.agents/skills/ttrpg-reward-ledger/SKILL.md) | Reconcile confirmed rewards, flag uncertainty, and prevent duplicate awards. |
+| [ttrpg-map-create](.agents/skills/ttrpg-map-create/SKILL.md) | Generate or refine campaign maps with configured scale and export settings. |
+| [ttrpg-token-create](.agents/skills/ttrpg-token-create/SKILL.md) | Generate or refine character tokens from descriptions or reference art. |
+| [ttrpg-wiki-maintenance](.agents/skills/ttrpg-wiki-maintenance/SKILL.md) | Find contradictions, stale notes, broken links, and spoiler leaks; propose repairs. |
 
 ## How do I get started?
 
@@ -42,4 +41,4 @@ For a guided first task, follow the [first-campaign walkthrough](docs/getting-st
 - [Sharing text and artwork](docs/provenance.md): sources, permissions, and attribution.
 - [Contributing](CONTRIBUTING.md): instructions for people changing the project itself.
 
-This project adapts [Andrej Karpathy's LLM Wiki approach](https://gist.github.com/karpathy/442a6bf555914893e9891c11519de94f) for campaign preparation, GM review, and spoiler protection. The framework and original examples use the [MIT License](LICENSE); imported rules, adventures, and artwork retain their own terms.
+This project adapts [Andrej Karpathy's LLM Wiki approach](https://gist.github.com/karpathy/442a6bf555914893e9891c11519de94f) for campaign preparation, GM review, and spoiler protection. The framework uses the [MIT License](LICENSE); imported rules, adventures, and artwork retain their own terms.

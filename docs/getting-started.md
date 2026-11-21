@@ -79,4 +79,4 @@ Open [the campaign index](../wiki/index.md) to find your new pages.
 
 After the game, bring in what actually happened. Preparing a scene does not make its outcome true. For a player recap, identify which facts the characters learned and review the finished text before sharing it.
 
-Continue with the [GM guide](gm-guide.md). The [fictional example](../examples/relay-station/README.md) shows how original notes, private information, and a player recap differ; it is separate from your campaign.
+Continue with the [GM guide](gm-guide.md).
