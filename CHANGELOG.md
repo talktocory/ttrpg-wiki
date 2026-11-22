@@ -9,6 +9,7 @@
 - Documented the successful 2026-11-19 GitHub Copilot in Visual Studio Code validation, made Python plus the project requirements the baseline for the complete local workflow, and shortened usage examples to the minimal prompts the skills handled successfully.
 - Documented the successful 2026-11-21 fresh Codex installation and campaign workflow in Visual Studio Code, including `@`-menu skill selection, PDF ingestion, temporary-file cleanup, and built-in map generation; clarified release extraction, optional Git initialization, and portable skill invocation.
 - Added pinned pypdf support and a tested local PDF text-extraction utility with page selection, page markers, layout mode, OCR warnings, and overwrite protection.
+- Normalized UTF-8 text line endings inside generated skill packages so committed ZIPs reproduce identically on Windows and Linux.
 - Limited supported Claude setup to Cowork with persistent folder access and Claude Code; attachment-only chat remains a recovery mechanism rather than an advertised wiki workflow.
 
 ## 0.2.0 - 2026-11-18

@@ -11,6 +11,15 @@ BUNDLED = {
     '../../../docs/operating-guide.md': 'references/framework/operating-guide.md',
     '../../../wiki/_templates/page-format.md': 'references/framework/page-format.md',
 }
+TEXT_SUFFIXES = {'.md', '.py', '.txt', '.yaml', '.yml'}
+
+
+def portable_bytes(path: Path) -> bytes:
+    """Read package content with stable LF endings for UTF-8 text files."""
+    content = path.read_bytes()
+    if path.name == 'LICENSE' or path.suffix.lower() in TEXT_SUFFIXES:
+        return content.decode('utf-8').replace('\r\n', '\n').replace('\r', '\n').encode('utf-8')
+    return content
 
 def zip_bytes(entries: dict[str, bytes], *, compression: int = ZIP_DEFLATED) -> bytes:
     stream = io.BytesIO()
@@ -44,7 +53,7 @@ def archive_errors(output: Path, expected: dict[str, bytes]) -> list[str]:
 def skill_entries(skill: Path, root: Path = ROOT) -> dict[str, bytes]:
     entries = {}
     if (root / 'LICENSE').is_file():
-        entries[f'{skill.name}/LICENSE'] = (root / 'LICENSE').read_bytes()
+        entries[f'{skill.name}/LICENSE'] = portable_bytes(root / 'LICENSE')
     for source in sorted(skill.rglob('*')):
         if '__pycache__' in source.parts or source.suffix in ('.pyc', '.pyo'):
             continue
@@ -52,7 +61,7 @@ def skill_entries(skill: Path, root: Path = ROOT) -> dict[str, bytes]:
             raise ValueError(f'Symlink in skill: {source}')
         if source.is_file():
             relative = source.relative_to(skill).as_posix()
-            content = source.read_bytes()
+            content = portable_bytes(source)
             if relative == 'SKILL.md':
                 text = content.decode('utf-8')
                 for original, bundled in BUNDLED.items():
@@ -60,7 +69,7 @@ def skill_entries(skill: Path, root: Path = ROOT) -> dict[str, bytes]:
                         reference = (source.parent / original).resolve()
                         if not reference.is_relative_to(root.resolve()):
                             raise ValueError('Shared reference escapes repository')
-                        entries[f'{skill.name}/{bundled}'] = reference.read_bytes()
+                        entries[f'{skill.name}/{bundled}'] = portable_bytes(reference)
                         text = text.replace(original, bundled)
                 content = text.encode('utf-8')
             entries[f'{skill.name}/{relative}'] = content

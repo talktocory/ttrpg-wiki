@@ -184,6 +184,21 @@ class PackageTests(unittest.TestCase):
                     self.assertIsNone(archive.testzip())
                     self.assertEqual({Path(n).parts[0] for n in archive.namelist()}, {skill.name})
 
+    def test_skill_packages_normalize_text_line_endings(self):
+        with tempfile.TemporaryDirectory() as directory:
+            root = Path(directory)
+            skill = root / '.agents/skills/ttrpg-test'
+            (skill / 'agents').mkdir(parents=True)
+            (root / 'LICENSE').write_bytes(b'License\r\nText\r\n')
+            (skill / 'SKILL.md').write_bytes(b'# Skill\r\n\r\nInstructions\r\n')
+            (skill / 'agents/openai.yaml').write_bytes(b'interface:\r\n  name: Test\r\n')
+            (skill / 'asset.bin').write_bytes(b'\x00\r\n\xff')
+            entries = skill_entries(skill, root)
+            self.assertEqual(entries['ttrpg-test/LICENSE'], b'License\nText\n')
+            self.assertEqual(entries['ttrpg-test/SKILL.md'], b'# Skill\n\nInstructions\n')
+            self.assertEqual(entries['ttrpg-test/agents/openai.yaml'], b'interface:\n  name: Test\n')
+            self.assertEqual(entries['ttrpg-test/asset.bin'], b'\x00\r\n\xff')
+
     def test_unbundled_reference_fails(self):
         with tempfile.TemporaryDirectory() as directory:
             skill = Path(directory) / 'ttrpg-test'

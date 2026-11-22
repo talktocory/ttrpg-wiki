@@ -53,7 +53,7 @@ Live setup checks remain pending for Claude Desktop Cowork, Claude Code, Copilot
 
 The OpenCode project configuration is parsed by the local test suite, and release validation checks its default Ollama model, approval safeguards, and enabled optional web and image integrations. These are structural checks, not evidence that a particular local model followed the campaign workflow correctly.
 
-Local utility checks used Windows, Python 3.13.7, PyYAML 6.0.3, Pillow 13.0.0, and pypdf 7.1.1. Configuration, links, skill metadata, generated instructions and host skill mirrors, 24 automated tests, skill ZIP construction, and the template ZIP round trip passed. CI is configured for Ubuntu and Windows on Python 3.11 and 3.13; those hosted jobs have not run as part of the local conversion.
+Local utility checks used Windows, Python 3.13.7, PyYAML 6.0.3, Pillow 13.0.0, and pypdf 7.1.1. Configuration, links, skill metadata, generated instructions and host skill mirrors, 25 automated tests, skill ZIP construction, and the template ZIP round trip passed. CI is configured for Ubuntu and Windows on Python 3.11 and 3.13; those hosted jobs have not run as part of the local conversion.
 
 Record the application version, date, task, and observed result when testing. The [contributor evaluation guide](../evaluation.md) has example tasks. Successful file checks alone do not establish working skill discovery or correct assistant behavior.
 

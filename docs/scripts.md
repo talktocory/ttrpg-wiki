@@ -91,7 +91,7 @@ It first runs the project validation checks. For each skill directory under `.ag
 2. Adds the framework license and copies the shared operating guide and page-format reference when linked by the skill.
 3. Rewrites those shared reference links inside the packaged `SKILL.md` so they resolve within the ZIP. The source skill is not edited.
 4. Checks that local Markdown file links resolve to package members. This package check does not validate heading fragments.
-5. Writes one ZIP containing one top-level skill folder. Entry order, timestamps, and file permissions are fixed. Skill ZIPs use uncompressed entries so builds match byte for byte across Python versions and compression libraries. The template release ZIP still uses compression.
+5. Writes one ZIP containing one top-level skill folder. Entry order, timestamps, file permissions, and UTF-8 text line endings are fixed. Skill ZIPs use uncompressed entries so builds match byte for byte across operating systems, Python versions, and compression libraries. The template release ZIP still uses compression.
 
 **Output:** `dist/skills/ttrpg-<skill-name>.zip`, with each path printed. Existing ZIPs with the same names are replaced. The script does not remove unrelated old files from `dist/skills/`. `--help` shows usage; there are no custom packaging options.
 
