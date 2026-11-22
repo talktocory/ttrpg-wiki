@@ -5,7 +5,7 @@ Target running time: 10–12 minutes.
 | Time        | Section                   | Teaching goal                                                                                                    |
 | ----------- | ------------------------- | ---------------------------------------------------------------------------------------------------------------- |
 | 0:00–0:40   | Problem and result        | Show the value of turning a published adventure into concise, navigable GM preparation.                          |
-| 0:40–1:25   | Starting state            | Confirm that the local Git repository is already configured and introduce `raw/`, `wiki/`, and `assets/`.        |
+| 0:40–1:25   | Starting state            | Establish Visual Studio Code as the shared workbench, confirm that the local Git repository is configured, and introduce `raw/`, `wiki/`, and `assets/`. |
 | 1:25–2:25   | Add the adventure source  | Show the authorized *Forgotten Circus* PDF or excerpt under `raw/pdfs/` and explain the focused ingestion scope. |
 | 2:25–4:15   | Request focused ingestion | Ask the agent to ingest the selected overview, Act 1, and relevant NPC sections as unplayed preparation.         |
 | 4:15–6:15   | Review the proposal       | Check destinations, source citations, Draft/Unused status, GM-only secrets, and the absence of played events.    |

@@ -4,7 +4,7 @@ Status: Initial scaffold. Exact interface labels must be confirmed in the record
 
 | Section | Narration direction | On screen |
 | --- | --- | --- |
-| Outcome | Explain that this short video ends with a local, configured campaign repository ready for source material. | Preview `campaign.yaml`, the campaign index, and a clean Source Control view. |
+| Outcome | Explain that Visual Studio Code is the standard workbench for the campaign files, AI chat, terminal, Markdown Preview, and Source Control. This video connects Codex and ends with a configured local campaign ready for source material. | Preview `campaign.yaml`, the campaign index, the Codex sidebar, and a clean Source Control view. |
 | Git prerequisite | Explain that Visual Studio Code provides the Source Control interface but relies on Git installed on the machine. A GitHub account is not required for local history. | Run `git --version` in the integrated terminal. If Git is missing, show the official download location, cut past installation, restart Visual Studio Code, and rerun the check. |
 | Commit identity | Explain that each commit records an author name and email. These are attribution fields, not GitHub credentials, and may be visible if the repository is published later. | Check `git config --global --get user.name` and `git config --global --get user.email`. Use a prepared non-personal recording identity; do not reveal a personal email address. |
 | Download and extract | Explain that the release ZIP is a blank campaign template and does not require creating or cloning a GitHub repository. | Download `ttrpg-wiki-template.zip`, extract it into a folder named for the fictional campaign, and open the folder containing `campaign.yaml` in Visual Studio Code. |

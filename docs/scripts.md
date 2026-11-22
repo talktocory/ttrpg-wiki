@@ -66,7 +66,7 @@ The generator reads [AGENTS.md](../AGENTS.md) and writes:
 - `.claude/skills/` mirrors for Claude Code project-skill discovery
 - `.github/skills/` mirrors for GitHub Copilot project-skill discovery
 
-The Copilot and Claude Code files receive the full instructions with a short introduction. Claude Code and Copilot mirrors include each skill's instructions, references, scripts, and assets but omit Codex-specific `agents/openai.yaml` metadata. All campaign policy and skill content still come from `AGENTS.md` and `.agents/skills/`. OpenCode v2 reads those canonical locations natively, so it does not need another generated adapter.
+The Copilot and Claude Code files receive the full instructions with a short introduction. Claude Code and Copilot mirrors include each skill's instructions, references, scripts, and assets but omit Codex-specific `agents/openai.yaml` metadata. All campaign policy and skill content still come from `AGENTS.md` and `.agents/skills/`. The validated Ollama extension discovered the canonical skill locations directly, so it does not need another generated adapter.
 
 **File effects:** generation replaces the two instruction files and managed Claude Code and Copilot skill mirrors. It removes obsolete mirror files recorded in each manifest while preserving unrelated project skills under `.claude/skills/` and `.github/skills/`. Make shared policy edits in `AGENTS.md` and skill edits in `.agents/skills/`. `--check` compares expected content and reports missing, stale, or obsolete generated files without writing anything. A change only to the shared operating guide does not change the generated adapter text; the adapters already direct the assistant to read that guide.
 
@@ -206,11 +206,11 @@ Source: [tests/test_framework.py](../tests/test_framework.py).
 python -m unittest discover -s tests -v
 ```
 
-The tests cover campaign and OpenCode configuration validation, duplicate YAML keys, local-path boundaries, player-safe links, self-contained skill packages, reproducible ZIP construction, release refusal for populated campaign state, a clean-template archive round trip, PDF text extraction and output protection, and token dimensions/transparency/overwrite protection. One test extracts the token skill and runs its utility as a standalone process.
+The tests cover campaign configuration validation, duplicate YAML keys, local-path boundaries, player-safe links, self-contained skill packages, reproducible ZIP construction, release refusal for populated campaign state, a clean-template archive round trip, PDF text extraction and output protection, and token dimensions/transparency/overwrite protection. One test extracts the token skill and runs its utility as a standalone process.
 
 **File effects:** creates isolated temporary files and removes them afterward. It reads the framework checkout but does not edit campaign files or write the regular `dist/` packages. The clean-release round-trip test is skipped when the blank-scaffold fingerprints no longer match a populated/customized campaign.
 
-**Result:** prints each test outcome and an overall result; exit code `0` means the tests passed, and nonzero indicates failure. A skipped test is not a pass for that capability. These are utility tests, not live Codex, Claude Code, Copilot, or OpenCode/Ollama evaluations; see [behavioral evaluation](evaluation.md).
+**Result:** prints each test outcome and an overall result; exit code `0` means the tests passed, and nonzero indicates failure. A skipped test is not a pass for that capability. These are utility tests, not live Codex, Claude Code, Copilot, or Ollama evaluations; see [behavioral evaluation](evaluation.md).
 
 ## Maintainer sequence
 

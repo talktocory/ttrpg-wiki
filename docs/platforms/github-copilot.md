@@ -1,5 +1,7 @@
 # Set Up Your Campaign in GitHub Copilot
 
+Visual Studio Code is the shared campaign workbench; GitHub Copilot supplies the AI assistant within it.
+
 ## Set up GitHub Copilot in Visual Studio Code
 
 Install [Visual Studio Code](https://code.visualstudio.com/), select the Copilot icon and **Use AI Features**, then authenticate with GitHub when prompted. Open the campaign folder in Visual Studio Code and trust the folder if Visual Studio Code asks. See the official [GitHub Copilot setup guide](https://code.visualstudio.com/docs/setup/copilot) for account and plan options.

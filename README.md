@@ -2,6 +2,8 @@
 
 Turn your tabletop role playing game (TTRPG) source material, session notes, and chat ideas into a private, AI-powered, campaign notebook that evolves with you and your campaign.
 
+Visual Studio Code is the standard workbench for TTRPG Wiki. It keeps the campaign files, AI chat, terminal, Markdown preview, and Source Control together in one local workspace. Codex, Claude Code, GitHub Copilot, and Ollama provide different AI assistants inside that shared environment.
+
 **[Download the blank campaign template (ZIP)](https://github.com/talktocory/ttrpg-wiki/releases/latest/download/ttrpg-wiki-template.zip)** · [Latest release notes](https://github.com/talktocory/ttrpg-wiki/releases/latest)
 
 ```mermaid
@@ -34,17 +36,16 @@ flowchart LR
 For the complete local workflow, you need:
 
 - A copy of the [blank campaign template](https://github.com/talktocory/ttrpg-wiki/releases/latest/download/ttrpg-wiki-template.zip).
-- A supported AI assistant with permission to read and save files in the campaign folder.
 - [Python 3.11 or newer](https://www.python.org/downloads/) with the packages from `requirements-dev.txt`.
+- [Visual Studio Code](https://code.visualstudio.com/) with the appropriate extensions installed.
+- [Git](https://git-scm.com/) is not required but is recommended for local version history.
 
 Choose an assistant and follow its setup guide:
 
 - [OpenAI Codex](docs/platforms/codex.md)
 - [Claude Code](docs/platforms/claude-code.md)
 - [GitHub Copilot](docs/platforms/github-copilot.md)
-- [OpenCode with Ollama](docs/platforms/opencode-ollama.md)
-
-Git is optional but recommended for local version history.
+- [Ollama](docs/platforms/ollama.md)
 
 ## How do I get started?
 

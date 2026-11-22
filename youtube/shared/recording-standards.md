@@ -24,7 +24,9 @@
 
 ## Editorial consistency
 
-- Use “Codex IDE extension” and “GitHub Copilot in Visual Studio Code agent mode” in narration.
+- Describe Visual Studio Code as the standard workbench that keeps campaign files, AI chat, the integrated terminal, Markdown Preview, and Source Control together.
+- Describe Codex, Claude Code, GitHub Copilot, or Ollama as the selected assistant or extension inside that workbench; do not describe the assistant as the campaign's storage or source of truth.
+- Use “Codex IDE extension,” “Claude Code extension,” “GitHub Copilot in Visual Studio Code agent mode,” and “Ollama extension with a local model” in platform-specific narration.
 - Explain that generated wording can vary; demonstrate required behavior rather than a fixed response.
 - Remove long waits while preserving enough progress indication that edits do not appear instantaneous.
 - Put commands and prompts in the description or linked project documentation when practical.
@@ -38,6 +40,7 @@ For each recording, note:
 - operating system;
 - Visual Studio Code version;
 - agent extension/version when available;
+- selected model when the interface exposes it;
 - Python version;
 - relevant account or plan limitations without exposing account details;
 - whether PDF reading and file editing were verified in that exact session.

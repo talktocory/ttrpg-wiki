@@ -33,7 +33,7 @@ Before recording:
 - Prepared scenes and outcomes are Draft or Unused rather than played events.
 - Private backstory, motives, clues, and future choices remain GM-only.
 - Concise wiki notes cite the source instead of reproducing substantial adventure text.
-- Codex proposes exact wiki destinations before editing them.
+- The selected assistant proposes exact wiki destinations before editing them.
 - No wiki files change during the proposal stage.
 - Approval causes the expected wiki files, `wiki/index.md`, and `wiki/log.md` to change.
 - Markdown links work in Preview.

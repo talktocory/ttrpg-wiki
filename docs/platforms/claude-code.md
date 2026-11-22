@@ -1,5 +1,7 @@
 # Set Up Your Campaign in Claude Code
 
+Visual Studio Code is the shared campaign workbench; the Claude Code extension supplies the AI assistant within it.
+
 ## Install Claude Code for Visual Studio Code
 
 Install [Visual Studio Code](https://code.visualstudio.com/) and the [Claude Code extension](https://marketplace.visualstudio.com/items?itemName=anthropic.claude-code), then sign in with your Anthropic account when prompted. Open the campaign folder in Visual Studio Code and trust the folder if Visual Studio Code asks. See the official [Claude Code for VS Code guide](https://code.claude.com/docs/en/vs-code) for account and installation options.

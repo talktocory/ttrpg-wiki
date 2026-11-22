@@ -5,11 +5,14 @@
 Download the [blank campaign template ZIP](https://github.com/talktocory/ttrpg-wiki/releases/latest/download/ttrpg-wiki-template.zip). The archive contains a top-level `ttrpg-wiki/` folder. Extract the archive, move that folder to the directory where you keep campaigns, and rename it for this campaign. You can then remove the downloaded ZIP and any empty extraction folder.
 
 For example, a campaign named *The Forgotten Circus* might end up at `Campaigns/The Forgotten Circus/`, with `campaign.yaml`, `wiki/`, `.agents/`, and the other project files directly inside it.
+
+Open that campaign folder in [Visual Studio Code](https://code.visualstudio.com/) and trust it if prompted. Visual Studio Code is the standard workbench for the documented workflow: keep the campaign files, AI chat, terminal, Markdown preview, and Source Control together in this one local workspace.
+
 ## 2. Set up the local Python environment
 
 Install [Python 3.11 or newer](https://www.python.org/downloads/) and the project's required packages once. This lets the AI assistant use the included validation, configuration, and image tools when needed; you do not need to write Python code.
 
-Open a terminal in the project root and run the commands for your shell.
+Open Visual Studio Code's integrated terminal in the project root and run the commands for your shell.
 
 ### Windows PowerShell
 
@@ -36,7 +39,7 @@ Choose the guide for:
 * [OpenAI Codex](platforms/codex.md),
 * [Claude Code](platforms/claude-code.md),
 * [GitHub Copilot](platforms/github-copilot.md), or
-* [OpenCode v2 with an Ollama model](platforms/opencode-ollama.md).
+* [Ollama](platforms/ollama.md).
 
 Follow that guide to connect the assistant and confirm that it can read and save the campaign folder. Then ask it to configure the campaign:
 

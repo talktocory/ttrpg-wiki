@@ -2,6 +2,8 @@
 
 ## Unreleased
 
+- Established Visual Studio Code as the standard documented workbench across the setup guides and YouTube production materials, while keeping campaign files, instructions, and skills authoritative and the shared walkthrough assistant-neutral.
+- Replaced the OpenCode-based Ollama integration with the manually validated Ollama extension for Visual Studio Code, documenting native Chat access to `qwen3-coder:30b`, automatic project-skill discovery, campaign initialization, observed performance, and validation limits.
 - Added `ttrpg-campaign-init` for guided, proposal-first setup of `campaign.yaml` and updated the first-campaign and platform onboarding documentation to use it.
 - Retained optional deterministic skill ZIP generation while making all `dist/` artifacts uncommitted build output; removed committed skill archives and their CI freshness check after upload-based hosts left the supported workflow.
 - Added generated `.claude/skills/` project mirrors for native Claude Code discovery and documented the Claude Code Visual Studio Code extension workflow.

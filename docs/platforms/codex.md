@@ -1,5 +1,7 @@
 # Set Up Your Campaign in Codex
 
+Visual Studio Code is the shared campaign workbench; the Codex extension supplies the AI assistant within it.
+
 ## Install Codex for Visual Studio Code
 
 Install [Visual Studio Code](https://code.visualstudio.com/) and the [OpenAI Codex extension](https://marketplace.visualstudio.com/items?itemName=openai.chatgpt), then authenticate for each when prompted. Open the campaign folder in Visual Studio Code and trust the folder if Visual Studio Code asks.
