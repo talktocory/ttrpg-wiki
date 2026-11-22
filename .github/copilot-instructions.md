@@ -41,7 +41,6 @@ Use Python 3.11+. Install `requirements-dev.txt` in a virtual environment. Valid
 python scripts/sync_adapters.py --check
 python scripts/validate.py
 python -m unittest discover -s tests -v
-python scripts/package_skills.py
 python scripts/build_release.py
 ```
 

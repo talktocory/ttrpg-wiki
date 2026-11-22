@@ -3,14 +3,14 @@
 ## Unreleased
 
 - Added `ttrpg-campaign-init` for guided, proposal-first setup of `campaign.yaml` and updated the first-campaign and platform onboarding documentation to use it.
-- Included the small deterministic skill ZIPs under `dist/skills/` for upload-based hosts, with CI checks for missing, stale, or obsolete packages; the template release ZIP remains generated and uncommitted.
-- Added generated `.claude/skills/` project mirrors for native Claude Code discovery and documented account-level skill upload for Claude.ai, Desktop, and Cowork.
+- Retained optional deterministic skill ZIP generation while making all `dist/` artifacts uncommitted build output; removed committed skill archives and their CI freshness check after upload-based hosts left the supported workflow.
+- Added generated `.claude/skills/` project mirrors for native Claude Code discovery and documented the Claude Code Visual Studio Code extension workflow.
 - Added generated `.github/skills/` project mirrors and native discovery guidance for GitHub Copilot in VS Code, Copilot CLI, and cloud agent.
 - Documented the successful 2026-11-19 GitHub Copilot in Visual Studio Code validation, made Python plus the project requirements the baseline for the complete local workflow, and shortened usage examples to the minimal prompts the skills handled successfully.
 - Documented the successful 2026-11-21 fresh Codex installation and campaign workflow in Visual Studio Code, including `@`-menu skill selection, PDF ingestion, temporary-file cleanup, and built-in map generation; clarified release extraction, optional Git initialization, and portable skill invocation.
 - Added pinned pypdf support and a tested local PDF text-extraction utility with page selection, page markers, layout mode, OCR warnings, and overwrite protection.
 - Normalized UTF-8 text line endings inside generated skill packages so committed ZIPs reproduce identically on Windows and Linux.
-- Limited supported Claude setup to Cowork with persistent folder access and Claude Code; attachment-only chat remains a recovery mechanism rather than an advertised wiki workflow.
+- Replaced the Claude Desktop and Cowork setup with a concise Claude Code Visual Studio Code extension guide and removed the generated folder-instructions artifact.
 
 ## 0.2.0 - 2026-11-18
 

@@ -12,12 +12,12 @@ Game Masters with access to an AI coding agent. They may be new to Git, Python, 
 
 Produce modular videos that can stand alone in a playlist and can later be combined into a longer chaptered guide without rerecording the demonstrations.
 
-| Video | Target length | Purpose |
-| --- | --- | --- |
-| Set up TTRPG Wiki with VS Code and Codex | 6–8 minutes | Download the release, create a local Git repository, connect Codex, and initialize the campaign. |
-| Set up TTRPG Wiki with VS Code and GitHub Copilot | 6–8 minutes | Create the same local workspace, connect Copilot agent mode, verify project skills, and initialize the campaign. |
-| Prepare an adventure with TTRPG Wiki | 10–12 minutes | Use a focused section of *The Forgotten Circus* to demonstrate source ingestion, proposal review, approval, Markdown Preview, and Git diff review. |
-| Complete start-to-finish guide | 20–30 minutes | Optional later supercut of the applicable setup module and the adventure walkthrough, with transitions and chapter timestamps. |
+| Video                                             | Target length | Purpose                                                                                                                                            |
+| ------------------------------------------------- | ------------- | -------------------------------------------------------------------------------------------------------------------------------------------------- |
+| Set up TTRPG Wiki with VS Code and Codex          | 6–8 minutes   | Download the release, create a local Git repository, connect Codex, and initialize the campaign.                                                   |
+| Set up TTRPG Wiki with VS Code and GitHub Copilot | 6–8 minutes   | Create the same local workspace, connect Copilot agent mode, verify project skills, and initialize the campaign.                                   |
+| Prepare an adventure with TTRPG Wiki              | 10–12 minutes | Use a focused section of *The Forgotten Circus* to demonstrate source ingestion, proposal review, approval, Markdown Preview, and Git diff review. |
+| Complete start-to-finish guide                    | 20–30 minutes | Optional later supercut of the applicable setup module and the adventure walkthrough, with transitions and chapter timestamps.                     |
 
 ## Shared message
 

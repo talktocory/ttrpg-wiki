@@ -34,21 +34,12 @@ def zip_bytes(entries: dict[str, bytes], *, compression: int = ZIP_DEFLATED) -> 
 
 def skill_archives(root: Path = ROOT) -> dict[str, bytes]:
     # Deflate output varies between zlib builds, including zlib-ng on Windows.
-    # Store these small packages uncompressed so --check is portable across CI.
+    # Store these small optional packages uncompressed for portable reproduction.
     return {
         skill.name + '.zip': zip_bytes(skill_entries(skill, root), compression=ZIP_STORED)
         for skill in sorted((root / '.agents/skills').iterdir())
         if skill.is_dir()
     }
-
-def archive_errors(output: Path, expected: dict[str, bytes]) -> list[str]:
-    existing = {path.name: path for path in output.glob('ttrpg-*.zip') if path.is_file()} if output.is_dir() else {}
-    errors = [f'Missing committed skill package: {name}' for name in sorted(set(expected) - set(existing))]
-    errors.extend(f'Obsolete committed skill package: {name}' for name in sorted(set(existing) - set(expected)))
-    for name in sorted(set(expected) & set(existing)):
-        if existing[name].read_bytes() != expected[name]:
-            errors.append(f'Stale committed skill package: {name}')
-    return errors
 
 def skill_entries(skill: Path, root: Path = ROOT) -> dict[str, bytes]:
     entries = {}
@@ -90,21 +81,13 @@ def skill_entries(skill: Path, root: Path = ROOT) -> dict[str, bytes]:
 
 def main() -> int:
     parser = argparse.ArgumentParser(description=__doc__)
-    parser.add_argument('--check', action='store_true', help='check committed packages without writing files')
-    args = parser.parse_args()
+    parser.parse_args()
     errors = validate_project()
     if errors:
         print('\n'.join(errors))
         return 1
     output = ROOT / 'dist/skills'
     archives = skill_archives()
-    if args.check:
-        errors = archive_errors(output, archives)
-        if errors:
-            print('\n'.join(errors))
-            return 1
-        print(f'Committed skill packages match {len(archives)} source skills.')
-        return 0
     output.mkdir(parents=True, exist_ok=True)
     for obsolete in sorted(output.glob('ttrpg-*.zip')):
         if obsolete.name not in archives:

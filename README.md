@@ -29,6 +29,23 @@ flowchart LR
 | [ttrpg-token-create](.agents/skills/ttrpg-token-create/SKILL.md)         | Generate or refine character tokens from descriptions or reference art.             |
 | [ttrpg-wiki-maintenance](.agents/skills/ttrpg-wiki-maintenance/SKILL.md) | Find contradictions, stale notes, broken links, and spoiler leaks; propose repairs. |
 
+## What do I need to get started?
+
+For the complete local workflow, you need:
+
+- A copy of the [blank campaign template](https://github.com/talktocory/ttrpg-wiki/releases/latest/download/ttrpg-wiki-template.zip).
+- A supported AI assistant with permission to read and save files in the campaign folder.
+- [Python 3.11 or newer](https://www.python.org/downloads/) with the packages from `requirements-dev.txt`.
+
+Choose an assistant and follow its setup guide:
+
+- [OpenAI Codex](docs/platforms/codex.md)
+- [Claude Code](docs/platforms/claude-code.md)
+- [GitHub Copilot](docs/platforms/github-copilot.md)
+- [OpenCode with Ollama](docs/platforms/opencode-ollama.md)
+
+Git is optional but recommended for local version history.
+
 ## How do I get started?
 
 For a guided first task, follow the [first-campaign walkthrough](docs/getting-started.md).

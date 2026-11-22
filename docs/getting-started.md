@@ -34,7 +34,7 @@ The requirements install the supported versions of PyYAML for configuration file
 Choose the guide for:
 
 * [OpenAI Codex](platforms/codex.md),
-* [Claude Desktop or Claude Code](platforms/claude-desktop.md),
+* [Claude Code](platforms/claude-code.md),
 * [GitHub Copilot](platforms/github-copilot.md), or
 * [OpenCode v2 with an Ollama model](platforms/opencode-ollama.md).
 

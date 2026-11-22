@@ -73,8 +73,7 @@ docs/getting-started.md
 docs/gm-guide.md
 docs/maintenance.md
 docs/operating-guide.md
-docs/platforms/claude-desktop.md
-docs/platforms/claude-folder-instructions.md
+docs/platforms/claude-code.md
 docs/platforms/codex.md
 docs/platforms/compatibility.md
 docs/platforms/github-copilot.md

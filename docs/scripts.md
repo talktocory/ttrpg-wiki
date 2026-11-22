@@ -8,7 +8,7 @@ This page documents the included Python utilities. Complete the [Python setup](g
 | --- | --- | --- | --- |
 | [validate.py](#validatepy) | Reports configuration, link, metadata, and visibility problems | GMs wanting a structural check; contributors | No campaign or framework edits |
 | [sync_adapters.py](#sync_adapterspy) | Regenerates host instructions and discovered skill mirrors | Contributors changing `AGENTS.md` or skills | Yes, unless using `--check` |
-| [package_skills.py](#package_skillspy) | Builds installable ZIP files for the nine skills | Maintainers; users who need to build their own skill packages | Writes skill ZIPs under `dist/skills/` |
+| [package_skills.py](#package_skillspy) | Optionally builds standalone ZIP files for the nine skills | Maintainers or users who specifically need separate skill packages | Writes ignored skill ZIPs under `dist/skills/` |
 | [build_release.py](#build_releasepy) | Builds a distributable copy of the blank project template | Release maintainers | Writes the template ZIP under `dist/` |
 | [wiki_tools.py](#wiki_toolspy) | Supplies shared validation, Markdown, path, and checksum functions | Other scripts import it; users do not run it directly | No campaign or framework edits |
 | [extract_pdf.py](#extract_pdfpy) | Extracts page-marked text from a PDF with a text layer | GMs and assistants ingesting PDF sources | Prints text or writes the requested output file; never edits the PDF |
@@ -62,14 +62,13 @@ python scripts/sync_adapters.py
 The generator reads [AGENTS.md](../AGENTS.md) and writes:
 
 - `.github/copilot-instructions.md`
-- `CLAUDE.md` for optional Claude Code use
-- `docs/platforms/claude-folder-instructions.md` for Desktop folder/task instructions
+- `CLAUDE.md` for Claude Code project instructions
 - `.claude/skills/` mirrors for Claude Code project-skill discovery
 - `.github/skills/` mirrors for GitHub Copilot project-skill discovery
 
-The Copilot and Claude Code files receive the full instructions with a short introduction. The Claude Desktop page puts only the campaign instructions into a clearly marked box for the GM to copy; the `Framework development` section and its contributor commands are left out. Claude Code and Copilot mirrors include each skill's instructions, references, scripts, and assets but omit Codex-specific `agents/openai.yaml` metadata. All campaign policy and skill content still come from `AGENTS.md` and `.agents/skills/`. OpenCode v2 reads those canonical locations natively, so it does not need another generated adapter.
+The Copilot and Claude Code files receive the full instructions with a short introduction. Claude Code and Copilot mirrors include each skill's instructions, references, scripts, and assets but omit Codex-specific `agents/openai.yaml` metadata. All campaign policy and skill content still come from `AGENTS.md` and `.agents/skills/`. OpenCode v2 reads those canonical locations natively, so it does not need another generated adapter.
 
-**File effects:** generation replaces the three instruction files and managed Claude Code and Copilot skill mirrors. It removes obsolete mirror files recorded in each manifest while preserving unrelated project skills under `.claude/skills/` and `.github/skills/`. Make shared policy edits in `AGENTS.md` and skill edits in `.agents/skills/`. `--check` compares expected content and reports missing, stale, or obsolete generated files without writing anything. A change only to the shared operating guide does not change the generated adapter text; the adapters already direct the assistant to read that guide.
+**File effects:** generation replaces the two instruction files and managed Claude Code and Copilot skill mirrors. It removes obsolete mirror files recorded in each manifest while preserving unrelated project skills under `.claude/skills/` and `.github/skills/`. Make shared policy edits in `AGENTS.md` and skill edits in `.agents/skills/`. `--check` compares expected content and reports missing, stale, or obsolete generated files without writing anything. A change only to the shared operating guide does not change the generated adapter text; the adapters already direct the assistant to read that guide.
 
 **Result:** exit code `0` after generation or a matching check; `1` when `--check` finds missing or outdated adapters. `--help` lists the supported command options.
 
@@ -79,7 +78,7 @@ The Copilot and Claude Code files receive the full instructions with a short int
 
 Source: [scripts/package_skills.py](../scripts/package_skills.py).
 
-**Purpose:** turn repository skill sources into self-contained installation packages, especially for hosts that accept uploaded skill ZIPs.
+**Purpose:** optionally turn repository skill sources into self-contained installation packages. Current supported project workflows discover skills directly from `.agents/skills/`, `.claude/skills/`, or `.github/skills/`; they do not require these ZIPs.
 
 ```text
 python scripts/package_skills.py
@@ -93,19 +92,13 @@ It first runs the project validation checks. For each skill directory under `.ag
 4. Checks that local Markdown file links resolve to package members. This package check does not validate heading fragments.
 5. Writes one ZIP containing one top-level skill folder. Entry order, timestamps, file permissions, and UTF-8 text line endings are fixed. Skill ZIPs use uncompressed entries so builds match byte for byte across operating systems, Python versions, and compression libraries. The template release ZIP still uses compression.
 
-**Output:** `dist/skills/ttrpg-<skill-name>.zip`, with each path printed. Existing ZIPs with the same names are replaced. The script does not remove unrelated old files from `dist/skills/`. `--help` shows usage; there are no custom packaging options.
+**Output:** ignored build artifacts at `dist/skills/ttrpg-<skill-name>.zip`, with each path printed. Existing ZIPs with the same names are replaced. The script does not remove unrelated old files from `dist/skills/`. `--help` shows usage; there are no custom packaging options. Generated ZIPs are not committed.
 
 Normal campaign directories such as `raw/` and `wiki/gm/` are not bundled. However, files placed inside a skill directory are included: keep private campaign references and personal art out of those authoring directories.
 
-The prepared skill ZIPs are committed so users of upload-based hosts can use them without running Python. Check that the committed packages exactly match their sources without writing files:
+Packaging replaces the canonical ZIPs and removes obsolete `ttrpg-*.zip` packages left by renamed or deleted skills. It leaves other files under `dist/skills/` alone.
 
-```text
-python scripts/package_skills.py --check
-```
-
-Normal packaging replaces the canonical ZIPs and removes obsolete `ttrpg-*.zip` packages left by renamed or deleted skills. It leaves other files under `dist/skills/` alone. The `--check` form reports missing, stale, or obsolete canonical packages and exits nonzero instead of changing them.
-
-**Limits:** it does not upload or install the ZIPs, include runtime campaign settings, provide image-generation tools, or run live AI-host tests. Validation failures or unresolved package references stop the build with a nonzero exit status. A partially completed build can leave a mix of replaced and earlier packages; rerun the command successfully and use `--check` before distributing them.
+**Limits:** it does not upload or install the ZIPs, include runtime campaign settings, provide image-generation tools, or run live AI-host tests. Validation failures or unresolved package references stop the build with a nonzero exit status. A partially completed build can leave a mix of replaced and earlier packages; rerun the command successfully before distributing them.
 
 ## build_release.py
 
@@ -217,7 +210,7 @@ The tests cover campaign and OpenCode configuration validation, duplicate YAML k
 
 **File effects:** creates isolated temporary files and removes them afterward. It reads the framework checkout but does not edit campaign files or write the regular `dist/` packages. The clean-release round-trip test is skipped when the blank-scaffold fingerprints no longer match a populated/customized campaign.
 
-**Result:** prints each test outcome and an overall result; exit code `0` means the tests passed, and nonzero indicates failure. A skipped test is not a pass for that capability. These are utility tests, not live Codex, Claude Desktop, Copilot, or OpenCode/Ollama evaluations; see [behavioral evaluation](evaluation.md).
+**Result:** prints each test outcome and an overall result; exit code `0` means the tests passed, and nonzero indicates failure. A skipped test is not a pass for that capability. These are utility tests, not live Codex, Claude Code, Copilot, or OpenCode/Ollama evaluations; see [behavioral evaluation](evaluation.md).
 
 ## Maintainer sequence
 
@@ -227,7 +220,6 @@ After reviewing framework changes, run:
 python scripts/sync_adapters.py --check
 python scripts/validate.py
 python -m unittest discover -s tests -v
-python scripts/package_skills.py
 python scripts/build_release.py
 ```
 
