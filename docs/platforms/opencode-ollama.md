@@ -58,7 +58,7 @@ Neither optional integration requires changing the default Ollama language model
 
 ## Limitations
 
-- PDF extraction depends on tools already available on your computer. If OpenCode cannot read a PDF locally, supply its extracted text.
+- PDF extraction can use the included `scripts/extract_pdf.py` utility after the project requirements are installed. Scanned or image-only pages still need OCR or supplied extracted text.
 - Web search and image generation require a compatible configured provider; they are not bundled with Ollama or this project. If unavailable, the assistant should offer a useful brief, direct URL workflow, or supplied-art process instead of claiming a result.
 - Local models vary significantly in instruction following and tool use. Review player-safe output for spoilers and verify that Draft, Canon, and visibility labels remain distinct.
 - A large context window does not make it safe to load an entire campaign unnecessarily. Start with the index and relevant pages, and keep tasks focused.

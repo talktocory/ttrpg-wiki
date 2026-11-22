@@ -4,7 +4,7 @@ Keep a short record of where your text and images came from, who made them, and 
 
 The organizing approach is adapted from [Andrej Karpathy's LLM Wiki idea file](https://gist.github.com/karpathy/442a6bf555914893e9891c11519de94f). The campaign workflows, GM review process, and spoiler safeguards are this project's adaptation; no endorsement is implied.
 
-The template includes original framework text and a Pillow-based token utility. It includes no rulebook extracts, commercial adventures, campaign portraits, maps, or reference tokens.
+The template includes original framework text, a Pillow-based token utility, and a pypdf-based PDF text-extraction utility. Pillow and pypdf remain third-party dependencies under their own licenses. The template includes no rulebook extracts, commercial adventures, campaign portraits, maps, or reference tokens.
 
 The framework is released under the [MIT License](../LICENSE). Dependencies retain their own licenses. Imported campaign material is not relicensed when it is placed in this project.
 

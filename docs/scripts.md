@@ -11,6 +11,7 @@ This page documents the included Python utilities. Complete the [Python setup](g
 | [package_skills.py](#package_skillspy) | Builds installable ZIP files for the nine skills | Maintainers; users who need to build their own skill packages | Writes skill ZIPs under `dist/skills/` |
 | [build_release.py](#build_releasepy) | Builds a distributable copy of the blank project template | Release maintainers | Writes the template ZIP under `dist/` |
 | [wiki_tools.py](#wiki_toolspy) | Supplies shared validation, Markdown, path, and checksum functions | Other scripts import it; users do not run it directly | No campaign or framework edits |
+| [extract_pdf.py](#extract_pdfpy) | Extracts page-marked text from a PDF with a text layer | GMs and assistants ingesting PDF sources | Prints text or writes the requested output file; never edits the PDF |
 | [finalize_token.py](#finalize_tokenpy) | Crops supplied art into a PNG token | GMs who want local token processing | Writes the requested image |
 | [test_framework.py](#test_frameworkpy) | Checks that the framework utilities behave as expected | Contributors | Creates temporary test files |
 
@@ -150,6 +151,30 @@ Its main responsibilities are:
 
 These functions return parsed data, paths, digests, or error lists to their callers. They do not rewrite the wiki. Keeping them together makes the validator and packaging tools use the same rules. Contributors should test changes here because several commands depend on this module.
 
+## extract_pdf.py
+
+Source: [scripts/extract_pdf.py](../scripts/extract_pdf.py).
+
+**Purpose:** extract text from a PDF source while retaining one-based page markers for later citations. The source PDF is never modified.
+
+Print every page to the terminal:
+
+```text
+python scripts/extract_pdf.py raw/pdfs/adventure.pdf
+```
+
+Extract selected pages into the ignored temporary area and preserve approximate layout:
+
+```text
+python scripts/extract_pdf.py raw/pdfs/adventure.pdf .tmp/adventure-pages.txt --pages 1,3-5 --layout
+```
+
+`--pages` accepts unique one-based page numbers and ascending ranges. Without an output path, text goes to standard output. With an output path, the script creates parent directories and refuses to replace an existing file unless `--force` is supplied. It refuses the source path and any `.pdf` destination because the output is UTF-8 text.
+
+Pages without extractable text receive an explicit marker and produce an OCR warning. This can mean the page is blank or that it contains only an image. The utility does not perform OCR, accept passwords for encrypted PDFs, reproduce visual layout exactly, interpret tables, update wiki pages, or establish that extracted content is safe to reveal. Keep the original under `raw/pdfs/`, treat extracted text as source data, and remove temporary output when the task is complete.
+
+**Result:** extracted UTF-8 text with `===== Page N =====` markers, or a nonzero exit status for invalid arguments, unreadable or encrypted PDFs, invalid page selections, and protected output paths.
+
 ## finalize_token.py
 
 Source: [the token skill's script](../.agents/skills/ttrpg-token-create/scripts/finalize_token.py).
@@ -188,7 +213,7 @@ Source: [tests/test_framework.py](../tests/test_framework.py).
 python -m unittest discover -s tests -v
 ```
 
-The tests cover campaign and OpenCode configuration validation, duplicate YAML keys, local-path boundaries, player-safe links, self-contained skill packages, reproducible ZIP construction, release refusal for populated campaign state, a clean-template archive round trip, and token dimensions/transparency/overwrite protection. One test extracts the token skill and runs its utility as a standalone process.
+The tests cover campaign and OpenCode configuration validation, duplicate YAML keys, local-path boundaries, player-safe links, self-contained skill packages, reproducible ZIP construction, release refusal for populated campaign state, a clean-template archive round trip, PDF text extraction and output protection, and token dimensions/transparency/overwrite protection. One test extracts the token skill and runs its utility as a standalone process.
 
 **File effects:** creates isolated temporary files and removes them afterward. It reads the framework checkout but does not edit campaign files or write the regular `dist/` packages. The clean-release round-trip test is skipped when the blank-scaffold fingerprints no longer match a populated/customized campaign.
 

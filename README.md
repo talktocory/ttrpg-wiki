@@ -1,6 +1,6 @@
 # TTRPG Wiki
 
-Turn your tabletop role playing game (TTRPG) session notes and chat ideas into a private, AI-powered, campaign notebook that evolves with you and your campaign.
+Turn your tabletop role playing game (TTRPG) source material, session notes, and chat ideas into a private, AI-powered, campaign notebook that evolves with you and your campaign.
 
 **[Download the blank campaign template (ZIP)](https://github.com/talktocory/ttrpg-wiki/releases/latest/download/ttrpg-wiki-template.zip)** · [Latest release notes](https://github.com/talktocory/ttrpg-wiki/releases/latest)
 
@@ -17,16 +17,16 @@ flowchart LR
 
 ## What can this TTRPG Wiki do?
 
-| Skill | Function |
-| --- | --- |
-| [ttrpg-campaign-init](.agents/skills/ttrpg-campaign-init/SKILL.md) | Guide campaign setup while preserving existing choices. |
-| [ttrpg-wiki-ingest](.agents/skills/ttrpg-wiki-ingest/SKILL.md) | Turn source notes and chat ideas into proposed wiki updates. |
-| [ttrpg-session-prep](.agents/skills/ttrpg-session-prep/SKILL.md) | Prepare flexible sessions from campaign context, character goals, and open hooks. |
-| [ttrpg-npc-dialogue](.agents/skills/ttrpg-npc-dialogue/SKILL.md) | Prepare scene dialogue that respects each NPC's voice, knowledge, and secrets. |
-| [ttrpg-player-safe](.agents/skills/ttrpg-player-safe/SKILL.md) | Draft and review player recaps, handouts, and revealed lore for spoilers. |
-| [ttrpg-reward-ledger](.agents/skills/ttrpg-reward-ledger/SKILL.md) | Reconcile confirmed rewards, flag uncertainty, and prevent duplicate awards. |
-| [ttrpg-map-create](.agents/skills/ttrpg-map-create/SKILL.md) | Generate or refine campaign maps with configured scale and export settings. |
-| [ttrpg-token-create](.agents/skills/ttrpg-token-create/SKILL.md) | Generate or refine character tokens from descriptions or reference art. |
+| Skill                                                                    | Function                                                                            |
+| ------------------------------------------------------------------------ | ----------------------------------------------------------------------------------- |
+| [ttrpg-campaign-init](.agents/skills/ttrpg-campaign-init/SKILL.md)       | Guide campaign setup while preserving existing choices.                             |
+| [ttrpg-wiki-ingest](.agents/skills/ttrpg-wiki-ingest/SKILL.md)           | Turn source notes and chat ideas into proposed wiki updates.                        |
+| [ttrpg-session-prep](.agents/skills/ttrpg-session-prep/SKILL.md)         | Prepare flexible sessions from campaign context, character goals, and open hooks.   |
+| [ttrpg-npc-dialogue](.agents/skills/ttrpg-npc-dialogue/SKILL.md)         | Prepare scene dialogue that respects each NPC's voice, knowledge, and secrets.      |
+| [ttrpg-player-safe](.agents/skills/ttrpg-player-safe/SKILL.md)           | Draft and review player recaps, handouts, and revealed lore for spoilers.           |
+| [ttrpg-reward-ledger](.agents/skills/ttrpg-reward-ledger/SKILL.md)       | Reconcile confirmed rewards, flag uncertainty, and prevent duplicate awards.        |
+| [ttrpg-map-create](.agents/skills/ttrpg-map-create/SKILL.md)             | Generate or refine campaign maps with configured scale and export settings.         |
+| [ttrpg-token-create](.agents/skills/ttrpg-token-create/SKILL.md)         | Generate or refine character tokens from descriptions or reference art.             |
 | [ttrpg-wiki-maintenance](.agents/skills/ttrpg-wiki-maintenance/SKILL.md) | Find contradictions, stale notes, broken links, and spoiler leaks; propose repairs. |
 
 ## How do I get started?

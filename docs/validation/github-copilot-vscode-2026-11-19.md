@@ -29,7 +29,7 @@ python -m pip install -r requirements-dev.txt
 
 Copilot requested approval before running several Git, Python, PowerShell, and PDF-processing commands. Python and the installed requirements should therefore be treated as the baseline for the complete local workflow, even though simple Markdown reading and writing may not invoke them.
 
-The requirements file supplies PyYAML and Pillow. It does not itself install a PDF parser, so PDF extraction remains dependent on the tools available to the selected AI host and local environment.
+At the time of this validation, the requirements file supplied PyYAML and Pillow but did not install a PDF parser, so extraction depended on tools available to the selected AI host and local environment. The framework later added a local pypdf utility; that later capability was not part of this test.
 
 ## Workflows exercised
 

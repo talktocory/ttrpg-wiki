@@ -2,8 +2,9 @@
 
 ## 1. Create a private campaign folder
 
-Download and unzip the project, or copy it into a folder named for your campaign. Keep one campaign in each copy. If you prefer GitHub, create a private repository from the template rather than putting campaign notes in a public fork.
+Download the [blank campaign template ZIP](https://github.com/talktocory/ttrpg-wiki/releases/latest/download/ttrpg-wiki-template.zip). The archive contains a top-level `ttrpg-wiki/` folder. Extract the archive, move that folder to the directory where you keep campaigns, and rename it for this campaign. You can then remove the downloaded ZIP and any empty extraction folder.
 
+For example, a campaign named *The Forgotten Circus* might end up at `Campaigns/The Forgotten Circus/`, with `campaign.yaml`, `wiki/`, `.agents/`, and the other project files directly inside it.
 ## 2. Set up the local Python environment
 
 Install [Python 3.11 or newer](https://www.python.org/downloads/) and the project's required packages once. This lets the AI assistant use the included validation, configuration, and image tools when needed; you do not need to write Python code.
@@ -26,7 +27,7 @@ source .venv/bin/activate
 python -m pip install -r requirements-dev.txt
 ```
 
-The requirements install the supported versions of PyYAML for configuration files and Pillow for image processing. They do not install a PDF parser; PDF support depends on the tools available to your AI assistant and local environment.
+The requirements install the supported versions of PyYAML for configuration files, Pillow for image processing, and pypdf for local text extraction from PDFs. The included parser handles PDFs with a usable text layer; it does not perform optical character recognition (OCR) on scanned or image-only pages. Your AI assistant may also have its own PDF tools.
 
 ## 3. Connect and configure your assistant
 
@@ -55,7 +56,7 @@ Try this minimum request:
 
 > Use ttrpg-wiki-ingest to ingest raw/markdown/my-session-notes.md.
 
-The skill already contains the proposal-first, evidence, status, and privacy instructions. If there is only one obvious source, a host with slash-command support may need only `/ttrpg-wiki-ingest`. Name the source when more than one file could match.
+The skill already contains the proposal-first, evidence, status, and privacy instructions. Some hosts expose project skills through a menu or a special prefix; follow the selected platform guide for its current syntax. A plain-language request naming `ttrpg-wiki-ingest` remains portable. Name the source when more than one file could match.
 
 ## 5. Approve the proposal and apply it to the wiki
 

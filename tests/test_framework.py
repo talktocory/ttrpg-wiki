@@ -4,6 +4,7 @@ import copy
 import importlib.util
 import io
 import json
+import logging
 from pathlib import Path
 import subprocess
 import sys
@@ -12,6 +13,9 @@ import unittest
 from unittest.mock import patch
 from zipfile import ZipFile
 from PIL import Image
+from pypdf import PdfWriter
+from pypdf.errors import PdfReadError
+from pypdf.generic import DecodedStreamObject, DictionaryObject, NameObject
 
 ROOT = Path(__file__).resolve().parents[1]
 sys.path.insert(0, str(ROOT / 'scripts'))
@@ -23,6 +27,32 @@ from sync_adapters import claude_skill_drift, copilot_skill_drift, expected_clau
 spec = importlib.util.spec_from_file_location('token_export', ROOT / '.agents/skills/ttrpg-token-create/scripts/finalize_token.py')
 token = importlib.util.module_from_spec(spec)
 spec.loader.exec_module(token)
+
+pdf_spec = importlib.util.spec_from_file_location('pdf_extract', ROOT / 'scripts/extract_pdf.py')
+pdf_extract = importlib.util.module_from_spec(pdf_spec)
+pdf_spec.loader.exec_module(pdf_extract)
+
+
+def write_text_pdf(path: Path, texts: list[str]) -> None:
+    writer = PdfWriter()
+    font = DictionaryObject({
+        NameObject('/Type'): NameObject('/Font'),
+        NameObject('/Subtype'): NameObject('/Type1'),
+        NameObject('/BaseFont'): NameObject('/Helvetica'),
+    })
+    font_ref = writer._add_object(font)
+    for text in texts:
+        page = writer.add_blank_page(width=612, height=792)
+        page[NameObject('/Resources')] = DictionaryObject({
+            NameObject('/Font'): DictionaryObject({NameObject('/F1'): font_ref}),
+        })
+        if text:
+            stream = DecodedStreamObject()
+            escaped = text.replace('\\', '\\\\').replace('(', '\\(').replace(')', '\\)')
+            stream.set_data(f'BT /F1 12 Tf 72 720 Td ({escaped}) Tj ET'.encode('latin-1'))
+            page[NameObject('/Contents')] = writer._add_object(stream)
+    with path.open('wb') as handle:
+        writer.write(handle)
 
 class ConfigTests(unittest.TestCase):
     def setUp(self):
@@ -249,6 +279,51 @@ class TokenTests(unittest.TestCase):
                 token.make_token(source, output, size=32, ring_width=16, force=True)
             with self.assertRaises(ValueError):
                 token.make_token(source, source, force=True)
+
+
+class PdfExtractionTests(unittest.TestCase):
+    def test_extracts_text_with_page_markers(self):
+        with tempfile.TemporaryDirectory() as directory:
+            source = Path(directory) / 'source.pdf'
+            write_text_pdf(source, ['First clue', 'Second clue'])
+            text, empty = pdf_extract.extract_pdf(source, layout=True)
+            self.assertEqual(empty, 0)
+            self.assertIn('===== Page 1 =====\nFirst clue', text)
+            self.assertIn('===== Page 2 =====\nSecond clue', text)
+
+    def test_selects_pages_and_reports_image_only_pages(self):
+        with tempfile.TemporaryDirectory() as directory:
+            source = Path(directory) / 'source.pdf'
+            write_text_pdf(source, ['First clue', '', 'Third clue'])
+            text, empty = pdf_extract.extract_pdf(source, '3,2')
+            self.assertNotIn('Page 1', text)
+            self.assertLess(text.index('Page 3'), text.index('Page 2'))
+            self.assertIn('may require OCR', text)
+            self.assertEqual(empty, 1)
+            with self.assertRaises(ValueError):
+                pdf_extract.parse_pages('2-1', 3)
+
+    def test_rejects_invalid_pdf(self):
+        with tempfile.TemporaryDirectory() as directory:
+            source = Path(directory) / 'broken.pdf'
+            source.write_text('not a PDF', encoding='utf-8')
+            with self.assertRaises(PdfReadError), self.assertLogs('pypdf', logging.WARNING):
+                pdf_extract.extract_pdf(source)
+
+    def test_refuses_overwrite_without_force(self):
+        with tempfile.TemporaryDirectory() as directory:
+            source = Path(directory) / 'source.pdf'
+            output = Path(directory) / 'output.txt'
+            write_text_pdf(source, ['Clue'])
+            output.write_text('keep', encoding='utf-8')
+            with self.assertRaises(FileExistsError):
+                pdf_extract.save_text(source, output, 'replace')
+            pdf_extract.save_text(source, output, 'replace', force=True)
+            self.assertEqual(output.read_text(encoding='utf-8'), 'replace')
+            with self.assertRaises(ValueError):
+                pdf_extract.save_text(source, source, 'replace', force=True)
+            with self.assertRaises(ValueError):
+                pdf_extract.save_text(source, Path(directory) / 'other.pdf', 'replace', force=True)
 
 if __name__ == '__main__':
     unittest.main()

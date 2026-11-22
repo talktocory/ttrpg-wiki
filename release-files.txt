@@ -81,6 +81,7 @@ docs/platforms/github-copilot.md
 docs/platforms/opencode-ollama.md
 docs/provenance.md
 docs/scripts.md
+docs/validation/codex-vscode-2026-11-21.md
 docs/validation/github-copilot-vscode-2026-11-19.md
 profiles/README.md
 profiles/systems/system-template.md
@@ -93,6 +94,7 @@ release-files.txt
 requirements-dev.txt
 opencode.json
 scripts/build_release.py
+scripts/extract_pdf.py
 scripts/package_skills.py
 scripts/sync_adapters.py
 scripts/template-state.json
