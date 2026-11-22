@@ -1,10 +1,14 @@
 # TTRPG Wiki
 
-Turn your tabletop role playing game (TTRPG) source material, session notes, and chat ideas into a private, AI-powered, campaign notebook that evolves with you and your campaign.
+Turn your tabletop role-playing game (TTRPG) source material, session notes, and chat ideas into a private, AI-powered campaign notebook that evolves alongside your game.
 
-Visual Studio Code is the standard workbench for TTRPG Wiki. It keeps the campaign files, AI chat, terminal, Markdown preview, and Source Control together in one local workspace. Codex, Claude Code, GitHub Copilot, and Ollama provide different AI assistants inside that shared environment.
+**[Download the wiki template (ZIP) to get started](https://github.com/talktocory/ttrpg-wiki/releases/latest/download/ttrpg-wiki-template.zip)** · [Latest release notes](https://github.com/talktocory/ttrpg-wiki/releases/latest)
 
-**[Download the blank campaign template (ZIP)](https://github.com/talktocory/ttrpg-wiki/releases/latest/download/ttrpg-wiki-template.zip)** · [Latest release notes](https://github.com/talktocory/ttrpg-wiki/releases/latest)
+## How does it work?
+
+This project adapts [Andrej Karpathy's LLM Wiki approach](https://gist.github.com/karpathy/442a6bf555914893e9891c11519de94f) for importing content, preparing campaigns, and reviewing changes with the GM. Visual Studio Code serves as the standard workbench, keeping campaign files, AI chat, a terminal, Markdown previews, and source control together in one local workspace. You can use Codex, Claude Code, GitHub Copilot, or Ollama as the AI assistant in that shared environment.
+
+The basic workflow is simple: add or discuss material, ask the assistant to ingest it, review the proposed changes, and approve the final wiki update.
 
 ```mermaid
 flowchart LR
@@ -17,7 +21,9 @@ flowchart LR
     review -->|Request revisions| ingest
 ```
 
-## What can this TTRPG Wiki do?
+## What can it do?
+
+The project includes the following skills, which AI assistants use to manage and maintain the wiki.
 
 | Skill                                                                    | Function                                                                            |
 | ------------------------------------------------------------------------ | ----------------------------------------------------------------------------------- |
@@ -38,7 +44,7 @@ For the complete local workflow, you need:
 - A copy of the [blank campaign template](https://github.com/talktocory/ttrpg-wiki/releases/latest/download/ttrpg-wiki-template.zip).
 - [Python 3.11 or newer](https://www.python.org/downloads/) with the packages from `requirements-dev.txt`.
 - [Visual Studio Code](https://code.visualstudio.com/) with the appropriate extensions installed.
-- [Git](https://git-scm.com/) is not required but is recommended for local version history.
+- [Git](https://git-scm.com/) (optional, but recommended for local version history).
 
 Choose an assistant and follow its setup guide:
 
@@ -49,7 +55,7 @@ Choose an assistant and follow its setup guide:
 
 ## How do I get started?
 
-For a guided first task, follow the [first-campaign walkthrough](docs/getting-started.md).
+Follow the [first-campaign walkthrough](docs/getting-started.md) for a guided setup and first task.
 
 ## Where do I find more info?
 
@@ -59,4 +65,4 @@ For a guided first task, follow the [first-campaign walkthrough](docs/getting-st
 - [Sharing text and artwork](docs/provenance.md): sources, permissions, and attribution.
 - [Contributing](CONTRIBUTING.md): instructions for people changing the project itself.
 
-This project adapts [Andrej Karpathy's LLM Wiki approach](https://gist.github.com/karpathy/442a6bf555914893e9891c11519de94f) for campaign preparation, GM review, and spoiler protection. The framework uses the [MIT License](LICENSE); imported rules, adventures, and artwork retain their own terms.
+The framework uses the [MIT License](LICENSE). Imported rules, adventures, and artwork retain their own terms.
